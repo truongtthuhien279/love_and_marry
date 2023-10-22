@@ -18,7 +18,6 @@ class Home extends StatelessWidget {
 
     //init home controller
     var controller = Get.put(HomeController());
-
     var navbarItem = [
     BottomNavigationBarItem(icon: Image.asset(icHome, width: 22), label: home)
     ,
