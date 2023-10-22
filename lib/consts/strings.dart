@@ -4,5 +4,7 @@ const String appname = "Love & Marry";
 const home = "Home", checklist = "Check List", dress = "Dress", forum = "Forum", profile = "Profile";
 
 //home screen strings
-const searchResort = "Resort...",
+const searchResort = "Resort...", searchItem = "Search Items...",
     topRated = "Top Rated", resort ="Resort", banquetHalls ="Banquet Halls", farmHouse = "FarmHouse";
+
+
