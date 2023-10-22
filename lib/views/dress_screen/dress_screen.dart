@@ -34,7 +34,7 @@ class DressScreen extends StatelessWidget {
                       border: InputBorder.none,
                       suffixIcon: Image(image: AssetImage(icSearch)),
                       filled: true,
-                      hintText: searchItem,
+                      hintText: "",
                       contentPadding: EdgeInsets.symmetric(
                           vertical: 10, horizontal: 10),
                       hintStyle: TextStyle(color: Colors.grey)),
