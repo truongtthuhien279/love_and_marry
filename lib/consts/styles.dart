@@ -1,3 +1,7 @@
-const regular = "Inter_Regular";
-const semibold = "Inter_SemiBold";
-const bold = "Inter_Bold";
+const regular = "Inter-Regular";
+const semibold = "Inter-SemiBold";
+const bold = "Inter-Bold";
+
+
+//cua hoa
+const fontLogo = "SpicyRice-Regular";
