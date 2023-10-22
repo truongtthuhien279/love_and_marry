@@ -16,3 +16,11 @@ const imgWC1 = "assets/images/wlcome.png";
 const icFacebookLogo = "assets/icons/facebook_logo.png";
 const icGoogleLogo = "assets/icons/google_logo.png";
 const icTwitterLogo = "assets/icons/twitter_logo.png";
+
+const imgRR = "assets/images/imgRS4.jpg";
+const imgPT = "assets/images/photo1.jpg";
+const imgMake ="assets/images/imgMake.jpg";
+const imgDress1 = "assets/images/imgDress1.jpg";
+const imgSuit1 = "assets/images/imgSuit1.jpg";
+const imgRS5 = "assets/images/imgRS5.jpg";
+

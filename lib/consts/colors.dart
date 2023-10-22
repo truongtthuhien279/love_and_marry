@@ -15,3 +15,6 @@ const Color fontGrey = Color.fromRGBO(107, 115, 119, 1);
 const Color lightGolden = Color(0xffFEEAD1);
 
 
+
+const Color greyColor = Color(0xccdddbd2);
+const Color greyishColor = Color(0x661d1d1d);
