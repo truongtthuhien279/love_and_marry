@@ -29,8 +29,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   Align(
                     alignment: Alignment.center,
                     child: Container(
-                      width: 303,
-                      height: 31,
+                      width: 330,
+                      height: 35,
                       margin: EdgeInsets.only(top: 10),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
@@ -374,7 +374,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             .make(),
                       ).box.margin(EdgeInsets.only(left: 12)).make(),
 
-                      //pppular dress
+                      //popular dress
                       10.heightBox,
                       SingleChildScrollView(
                         physics: BouncingScrollPhysics(),
