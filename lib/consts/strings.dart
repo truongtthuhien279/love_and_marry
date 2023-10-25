@@ -29,3 +29,16 @@ const loginWith = "Log in  with";
 const privacyPolicy = "Privacy Policy";
 const termAndCond = "Terms and Conditions";
 const alreadyHaveAccount = "Already have an account?";
+const tasktext1 = "Lorem Ipsum is ";
+const tasktext2 = "Lorem Ipsum is simply ";
+const tasktext3 = "Lorem Ipsum is simply dummy ";
+const tasktext4 = "Lorem Ipsum is simply dummy text ";
+const tasktext5 = "Lorem Ipsum is simply dummy text of ";
+const tasktext6 = "Lorem Ipsum is simply dummy text of the ";
+const tasktext7 = "Lorem Ipsum is simply dummy text of the printing ";
+
+
+
+
+
+

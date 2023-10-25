@@ -5,3 +5,5 @@ const socialIconList = [
   icGoogleLogo,
   icTwitterLogo
 ];
+
+const checkButtonsList = [tasktext1, tasktext2, tasktext3, tasktext4, tasktext5, tasktext6, tasktext7];
