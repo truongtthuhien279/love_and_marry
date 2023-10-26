@@ -1,10 +1,10 @@
 const String appname = "Love & Marry";
 
 //home strings
-const home = "Home", checklist = "Check List", dress = "Dress", forum = "Forum", profile = "Profile";
+const home = "Home", checklist = "Check List", dress = "Dress", forum = "Forum", profile = "Profile",suit = "Suits";
 
-//home screen strings
-const searchResort = "Resort...",
+//home screen strings"
+const searchResort = "Resort...", searchItems = "Search Items...",
     topRated = "Top Rated", resort ="Resort", banquetHalls ="Banquet Halls", farmHouse = "FarmHouse";
 
 

@@ -6,7 +6,7 @@ const icProfile = "assets/icons/profile.png";
 const imgLoading = "assets/images/Loading.png";
 const imgH1 = "assets/images/imgh1.jpg";
 const icSearch = "assets/icons/search.png";
-
+const imgDress2 = "assets/images/imgDress2.jpg";
 
 
 // cua Hoa
