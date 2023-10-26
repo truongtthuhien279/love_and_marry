@@ -41,7 +41,8 @@ class _CheckListScreenState extends State<CheckListScreen> {
           Get.to(() => const HomeScreen());
     },
              child: Text(
-                'Checklist',
+                // 'Checklist',
+               "Check List",
                  style: TextStyle(color: brownColor),
             ),
             ),
@@ -75,7 +76,8 @@ class _CheckListScreenState extends State<CheckListScreen> {
       margin: EdgeInsets.all(10.0), // Khoảng cách giữa nội dung và viền hộp
       padding: EdgeInsets.all(20.0), // Khoảng cách giữa nội dung và bo góc
       decoration: BoxDecoration(
-        color: lightGolden,
+        // color: lightGolden,
+        color: Colors.orange[100],
         borderRadius: BorderRadius.circular(10.0),
         boxShadow: [
           BoxShadow(
@@ -91,7 +93,7 @@ class _CheckListScreenState extends State<CheckListScreen> {
           children: [
           // Biểu tượng hình tròn ở góc trái
           Positioned(
-          left: 272.0,
+          left: 300.0,
           top: 10.0,
           child: GestureDetector(
             onTap: () {
@@ -105,19 +107,11 @@ class _CheckListScreenState extends State<CheckListScreen> {
                   ? Icons.circle_sharp
                   : Icons.circle_outlined,
               size: 30,
-              color: Colors.blue,
+              // color: Colors.blue,
+              color: Colors.orange[600],
             ),
           ),
           ),
-
-
-
-
-
-
-
-
-
 
        Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -131,11 +125,17 @@ class _CheckListScreenState extends State<CheckListScreen> {
             ),
           ),
           SizedBox(height: 5),
-          Text(
-            taskText,
-            style: TextStyle(
-              color: brownColor,
-              fontSize: 15,
+          Container(
+            constraints: BoxConstraints(
+              maxWidth: 300,
+            ),
+            child: Text(
+              taskText,
+              style: TextStyle(
+                color: brownColor,
+                fontSize: 15,
+
+              ),
             ),
           ),
 
