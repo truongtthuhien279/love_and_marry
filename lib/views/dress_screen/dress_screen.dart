@@ -23,6 +23,7 @@ class _DressScreenState extends State<DressScreen> {
       color: creamColor,
       width: context.screenWidth,
       height: context.screenHeight,
+
       child: Scaffold(
         appBar: AppBar(
           title: Text("Wedding Dresses", style: TextStyle(color: Colors.black),),
@@ -354,6 +355,7 @@ class _DressScreenState extends State<DressScreen> {
 
 
                 ],
+
               ),
             ),
           ),

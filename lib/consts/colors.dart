@@ -10,7 +10,7 @@ const Color whiteColor = Color(0xffffffff) ;
 const Color backgrColor = Color.fromRGBO(255, 248, 220, 1);
 const Color brownColor = Color.fromRGBO(78, 53, 47, 1);
 const Color textfieldGrey = Color.fromRGBO(209, 209, 209, 1);
-const Color lightGrey = Color.fromRGBO(239, 239, 239, 1);
+const Color lightGrey = Color.fromRGBO(243, 241, 241, 1.0);
 const Color fontGrey = Color.fromRGBO(107, 115, 119, 1);
 const Color lightGolden = Color(0xffFEEAD1);
 
