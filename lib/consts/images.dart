@@ -7,6 +7,9 @@ const imgLoading = "assets/images/Loading.png";
 const imgH1 = "assets/images/imgh1.jpg";
 const icSearch = "assets/icons/search.png";
 const imgDress2 = "assets/images/imgDress2.jpg";
+const imgDress3 ="assets/images/imgDress3.jpg";
+const imgDress4 ="assets/images/imgDress4.jpg";
+const imgDress5 ="assets/images/imgDress5.jpg";
 
 
 // cua Hoa
