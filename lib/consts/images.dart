@@ -24,3 +24,23 @@ const imgDress1 = "assets/images/imgDress1.jpg";
 const imgSuit1 = "assets/images/imgSuit1.jpg";
 const imgRS5 = "assets/images/imgRS5.jpg";
 
+const imgProfile = "assets/images/Avatar.jpg";
+
+// profile
+const icSearch1 = "assets/icons/search.jpg";
+const icShare = "assets/icons/share.jpg";
+const icHelp = "assets/icons/help.jpg";
+const icDress1 = "assets/icons/dress1.jpg";
+const icSetting = "assets/icons/setting1.jpg";
+const icFeedback = "assets/icons/star.jpg";
+const icBudget = "assets/icons/budget.jpg";
+const icHeart = "assets/icons/ant-design_heart-outlined.jpg";
+const icForums1 = "assets/icons/forums.jpg";
+
+//forum
+const imgForm1 = "assets/images/forum1.jpg";
+const imgForm2 = "assets/images/forum2.jpg";
+const imgForm3 = "assets/images/forum3.jpg";
+const imgAvata2 = "assets/images/avata2.png";
+
+

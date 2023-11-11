@@ -99,6 +99,7 @@ class _DressScreenState extends State<DressScreen> {
                                 i < checkOnTap.length;
                                 i++) {
                                   checkOnTap[i] = false;
+                                  checkOnTap[i] = false;
                                 }
                                 checkOnTap[indexOnTap] = true;
                               });
