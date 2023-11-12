@@ -22,6 +22,7 @@ const name = "Name";
 const nameHint = "User name";
 const forgetPass = "Forget Password";
 const login = "Log in";
+const logout = "Log out";
 const getStart = "Get Start";
 const signup = "Sign up";
 const createNewAccount = "or, create a new account";
@@ -37,6 +38,17 @@ const tasktext5 = "Lorem Ipsum is simply dummy text of ";
 const tasktext6 = "Lorem Ipsum is simply dummy text of the ";
 const tasktext7 = "Lorem Ipsum is simply dummy text of the printing ";
 
+
+//profile
+const suppliers = "Suppliers",
+    budget = "Budget",
+    favourite = "Favourite",
+    //weddingForums = "Wedding forums",
+    //dress1 = "Dress",
+    setting = "Setting",
+    shareApp = "Share the app",
+    help = "Help",
+    feedback = "Give us your feedback";
 
 
 
