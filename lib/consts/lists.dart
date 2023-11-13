@@ -7,3 +7,7 @@ const socialIconList = [
 ];
 
 const checkButtonsList = [tasktext1, tasktext2, tasktext3, tasktext4, tasktext5, tasktext6, tasktext7];
+
+//profile
+const profileButtonsList = [suppliers, budget, favourite, setting, shareApp, help, feedback];
+const profileButtonsIcon = [icSearch1, icBudget, icHeart, icSetting, icShare, icHelp, icFeedback];
