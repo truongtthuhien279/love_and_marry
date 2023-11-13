@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:love_and_marry_app/consts/consts.dart';
+import 'package:love_and_marry_app/controllers/auth_controller.dart';
 
+import '../../consts/firebase_consts.dart';
 import '../../consts/lists.dart';
 import '../home_screen/home.dart';
 import '../widget_common/applogo_widget.dart';
@@ -19,7 +21,13 @@ class SignupScreen extends StatefulWidget {
 
 class _SignupScreenState extends State<SignupScreen> {
   bool? isCheck = false;
+  var controller = Get.put(AuthController());
 
+  //text controller
+  var nameController = TextEditingController();
+  var emailController = TextEditingController();
+  var passwordController = TextEditingController();
+  var passwordRetypeController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return bgWidget(
@@ -35,10 +43,10 @@ class _SignupScreenState extends State<SignupScreen> {
                   SizedBox(height: 15,),
                   Column(
                     children: [
-                      customTextField(hint: emailHint, title: email),
-                      customTextField(hint: passwordHint, title: password),
-                      customTextField(hint: passwordHint, title: password),
-                      customTextField(hint: passwordHint, title: retypePassword),
+                      customTextField(hint: nameHint, title: name, controller: nameController, isPass: false),
+                      customTextField(hint: emailHint, title: email, controller: emailController,isPass: false),
+                      customTextField(hint: passwordHint, title: password, controller: passwordController,isPass: true),
+                      customTextField(hint: passwordHint, title: retypePassword, controller: passwordRetypeController,isPass: true),
                       Align(
                           alignment: Alignment.centerRight,
                           child: TextButton(
@@ -46,7 +54,8 @@ class _SignupScreenState extends State<SignupScreen> {
                       Row(
                         children: [
                           Checkbox(
-                            checkColor: brownColor,
+                            activeColor: brownColor,
+                            checkColor: Colors.white,
                             value: isCheck,
                             onChanged: (newValue) {
                               setState(() {
@@ -88,14 +97,36 @@ class _SignupScreenState extends State<SignupScreen> {
                           )
                         ],
                       ),
-                      SizedBox(height: 5,),
+                      SizedBox(height: 5),
+                      controller.isLoading.value? const CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation(brownColor),
+                      ) :
                       ourButton(
-                          color: brownColor,
+                        color: isCheck == true ? brownColor : lightGrey,
                           title: signup,
                           textColor: backgrColor,
-                          onPress: () {
-                            Get.to(() => const Home());
-                          }).box.width(context.screenWidth - 50).make(),
+                          onPress: () async {
+                            if(isCheck !=false){
+                              controller.isLoading(true);
+                              try{
+                                await controller.signupMethod(context: context, email: emailController.text, password: passwordController.text).then((value){
+                                  return controller.storeUserData(
+                                    email:emailController.text,
+                                    password: passwordController.text,
+                                    name: nameController.text,
+                                  );
+                                }).then((value) {
+                                  VxToast.show(context, msg: loggedin);
+                                  Get.offAll(()=>Home());
+                                });
+                              }
+                              catch (e) {
+                                auth.signOut();
+                                VxToast.show(context, msg: e.toString());
+                                controller.isLoading(false);
+                              }
+                            }
+                          },).box.width(context.screenWidth - 50).make(),
 
                     ],
                   ).box

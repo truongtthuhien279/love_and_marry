@@ -6,6 +6,8 @@ const home = "Home", checklist = "Check List", dress = "Dress", forum = "Forum",
 //home screen strings"
 const searchResort = "Resort...", searchItems = "Search Items...",
     topRated = "Top Rated", resort ="Resort", banquetHalls ="Banquet Halls", farmHouse = "FarmHouse";
+const loggedin = "Logged in successfully";
+const loggedout = "Logged out successfully";
 
 
 //cua Hoa

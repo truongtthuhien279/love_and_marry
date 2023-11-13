@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "510713213836",
+    "project_id": "loveandmerry-103a2",
+    "storage_bucket": "loveandmerry-103a2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:510713213836:android:e00817902c8f15c1d41ca9",
+        "android_client_info": {
+          "package_name": "com.android.application"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmXWHZzeI0qtzC_Z7O2IgZKQrHXFUqiIA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

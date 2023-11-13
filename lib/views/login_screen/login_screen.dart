@@ -6,6 +6,7 @@ import 'package:love_and_marry_app/views/widget_common/bg_widget.dart';
 import 'package:love_and_marry_app/views/widget_common/custom_textfield.dart';
 
 import '../../consts/lists.dart';
+import '../../controllers/auth_controller.dart';
 import '../home_screen/home.dart';
 import '../signup_screen/signup_screen.dart';
 import '../widget_common/applogo_widget.dart';
@@ -21,6 +22,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
+    var controller = Get.put(AuthController());
     return bgWidget(
         Scaffold(
           resizeToAvoidBottomInset: false,
@@ -34,19 +36,33 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(height: 15,),
                   Column(
                     children: [
-                      customTextField(hint: emailHint, title: email),
-                      customTextField(hint: passwordHint, title: password),
+                      customTextField(hint: emailHint, title: email, isPass: false, controller: controller.emailController),
+                      customTextField(hint: passwordHint, title: password, isPass: true, controller: controller.passwordController),
                       Align(
                           alignment: Alignment.centerRight,
                           child: TextButton(
                               onPressed: () {}, child: forgetPass.text.make())),
                       SizedBox(height: 5,),
+                      controller.isLoading.value
+                          ? CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation(brownColor),
+                      ) :
                       ourButton(
                           color: brownColor,
                           title: login,
                           textColor: backgrColor,
-                          onPress: () {
-                            Get.to(() => const Home());
+                          onPress: () async {
+                            controller.isLoading(true);
+                            await controller
+                                .loginMethod(context: context)
+                                .then((value) {
+                              if (value != null) {
+                                VxToast.show(context, msg: loggedin);
+                                Get.offAll(() => Home());
+                              } else{
+                                controller.isLoading(false);
+                              }
+                            });
                           }).box.width(context.screenWidth - 50).make(),
                       SizedBox(height: 5,),
                       createNewAccount.text.color(fontGrey).make(),
