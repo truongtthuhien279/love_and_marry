@@ -11,3 +11,7 @@ const checkButtonsList = [tasktext1, tasktext2, tasktext3, tasktext4, tasktext5,
 //profile
 const profileButtonsList = [suppliers, budget, favourite, setting, shareApp, help, feedback];
 const profileButtonsIcon = [icSearch1, icBudget, icHeart, icSetting, icShare, icHelp, icFeedback];
+
+//suppliers categories
+const categoriesList = [suppliers, photographer, makeUp];
+const categoriesImages = [imgRR, imgPT, imgMake];

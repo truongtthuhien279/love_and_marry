@@ -54,6 +54,10 @@ const suppliers = "Suppliers",
     feedback = "Give us your feedback";
 
 
+//Supplier categories
+const resort1 = "Resorts", photographer = "Photographers", makeUp = "Make - up";
+
+
 
 
 
