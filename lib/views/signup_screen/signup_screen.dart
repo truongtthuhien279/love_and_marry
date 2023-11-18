@@ -31,7 +31,7 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     return bgWidget(
-        Scaffold(
+      child:  Scaffold(
           resizeToAvoidBottomInset: false,
           body: SingleChildScrollView(
             child: Center(
@@ -128,19 +128,20 @@ class _SignupScreenState extends State<SignupScreen> {
                             }
                           },).box.width(context.screenWidth - 50).make(),
 
-                    ],
-                  ).box
-                      .white
-                      .rounded
-                      .padding(const EdgeInsets.all(16))
-                      .width(context.screenWidth - 70).shadowSm
-                      .make(),
-
+                      ],
+                    ).box
+                        .white
+                        .rounded
+                        .padding(const EdgeInsets.all(16))
+                        .width(context.screenWidth - 70).shadowSm
+                        .make(),
                 ],
+                  ),
+
+
               ),
             ),
           ),
-        )
     );
   }
 }
