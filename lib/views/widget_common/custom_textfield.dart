@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:love_and_marry_app/consts/consts.dart';
 
-Widget customTextField({String? title, String? hint, controller}) {
+Widget customTextField({String? title, String? hint, controller, isPass}) {
   Color? redColor;
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -10,6 +10,8 @@ Widget customTextField({String? title, String? hint, controller}) {
       title!.text.color(brownColor).fontFamily(semibold).size(16).make(),
       SizedBox(height: 5,),
       TextFormField(
+        obscureText: isPass,
+        controller: controller,
         decoration: InputDecoration(
           hintStyle: TextStyle(
             fontFamily: semibold,

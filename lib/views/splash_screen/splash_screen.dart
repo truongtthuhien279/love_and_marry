@@ -1,10 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:love_and_marry_app/consts/consts.dart';
 import 'package:love_and_marry_app/views/home_screen/home.dart';
+import '../../consts/firebase_consts.dart';
 import '../../consts/strings.dart';
+import '../login_screen/login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -17,9 +20,16 @@ class _SplashScreenState extends State<SplashScreen> {
 
   //Creating a method to change scscreen
   changeScreen() {
-    Future.delayed(Duration(seconds: 3), () {
-      //using getX;
-      Get.to(() => const Home());
+    Future.delayed(Duration(seconds: 3),()  {
+      //using getX
+      // Get.to(() => const LoginScreen());
+      auth.authStateChanges().listen((User? user) {
+        if(user == null && mounted) {
+          Get.to(() => LoginScreen());
+        } else {
+          Get.to(() => Home());
+        }
+      });
     });
   }
 
