@@ -3,6 +3,7 @@ import 'package:love_and_marry_app/consts/consts.dart';
 import 'package:love_and_marry_app/views/widget_common/bg_widget.dart';
 
 import '../../consts/lists.dart';
+import '../supplier/suplier_categories/categories_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -61,12 +62,24 @@ class ProfileScreen extends StatelessWidget {
                   },
                   itemCount: profileButtonsList.length,
                   itemBuilder: (BuildContext context, int index) {
+                    bool isFavourite = profileButtonsList[index] == "Favourite";
+                    bool isBudget = profileButtonsList[index] == "Budget";
+                    bool isSuppliers = profileButtonsList[index] == "Suppliers";
                     return ListTile(
                       leading: Image.asset(
                           profileButtonsIcon[index],
                           width: 22
                       ),
                       title: profileButtonsList[index].text.fontFamily(semibold).color(darkFontGrey).make(),
+                      onTap: (){
+                        // Nếu là "Suppliers", chuyển đến trang Categories
+                        if(isSuppliers) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => CategoriesScreen()),
+                          );
+                        }
+                      },
                     );
                   },
                 ).box.white.rounded.margin(EdgeInsets.all(12)).padding(EdgeInsets.symmetric(horizontal: 16)).shadowSm.make().box.color(backgrColor).make(),

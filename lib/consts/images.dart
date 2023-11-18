@@ -26,6 +26,7 @@ const imgMake ="assets/images/imgMake.jpg";
 const imgDress1 = "assets/images/imgDress1.jpg";
 const imgSuit1 = "assets/images/imgSuit1.jpg";
 const imgRS5 = "assets/images/imgRS5.jpg";
+const imgRS3 = "assets/images/imgRS3.jpg";
 
 const imgProfile = "assets/images/Avatar.jpg";
 
@@ -45,5 +46,7 @@ const imgForm1 = "assets/images/forum1.jpg";
 const imgForm2 = "assets/images/forum2.jpg";
 const imgForm3 = "assets/images/forum3.jpg";
 const imgAvata2 = "assets/images/avata2.png";
+
+const imgLocation = "assets/images/imgLocation.png";
 
 

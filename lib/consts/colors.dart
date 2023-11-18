@@ -18,3 +18,6 @@ const Color lightGolden = Color(0xffFEEAD1);
 
 const Color greyColor = Color(0xccdddbd2);
 const Color greyishColor = Color(0x661d1d1d);
+
+const Color golden = Color.fromRGBO(255, 168, 0, 1);
+const Color colorRes = Color.fromRGBO(167, 122, 87, 1);
