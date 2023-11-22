@@ -6,4 +6,14 @@ class FirestoreServices {
         .where('id', isEqualTo: uid)
         .snapshots();
   }
+  static getToprate() {
+    return  firestore.collection(popularSvCollection).snapshots();
+    // return firestore.collection(popularSvCollection).where('s_name',isEqualTo: 'dress').snapshots();
+  }
+  static getPopularProduct(){
+      return firestore.collection(popularPrCollection).snapshots();
+  }
+  static getPopularPhotoMake(){
+    return firestore.collection(popularPrCollection).where('p_service',  whereIn: ['Photographers', 'makeup']).snapshots();
+  }
 }

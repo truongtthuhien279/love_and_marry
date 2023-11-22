@@ -8,3 +8,5 @@ User? currentUser = auth.currentUser;
 
 //collection
 const usersCollection = "users";
+const popularSvCollection = "popular_service";
+const popularPrCollection = "popular_product";
