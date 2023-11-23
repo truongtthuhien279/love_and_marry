@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:love_and_marry_app/consts/consts.dart';
+import 'package:love_and_marry_app/controllers/services_controller.dart';
+import 'package:love_and_marry_app/views/widget_common/bg_widget.dart';
 
 import '../../../consts/colors.dart';
 import '../../../consts/lists.dart';
@@ -17,16 +19,11 @@ class CategoriesScreen extends StatefulWidget {
 class _CategoriesState extends State<CategoriesScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: creamColor,
-      width: context.screenWidth,
-      height: context.screenHeight,
+    var controller = Get.put(ServiceController());
+    return bgWidget(
       child: Scaffold(
         appBar: AppBar(
-          title: Text(
-            "Suppliers",
-            style: TextStyle(color: brownColor),
-          ),
+          title: suppliers.text.fontFamily(bold).black.make(),
           backgroundColor: Colors.white,
         ),
         body: SingleChildScrollView(
@@ -45,9 +42,11 @@ class _CategoriesState extends State<CategoriesScreen> {
                         width: 230,
                         fit: BoxFit.cover,),
                       SizedBox(height: 10,),
-                      categoriesList[index].text.color(brownColor).fontWeight(FontWeight.bold).align(TextAlign.center).make(),
+                      "${categoriesList[index]}".text.color(brownColor).fontWeight(FontWeight.bold).align(TextAlign.center).make(),
                     ],
                   ).box.white.rounded.clip(Clip.antiAlias).shadowSm.make().onTap(() {
+
+                    controller.getSubCategories(categoriesList[index]);
                     Get.to(() => CategoryDetails(title: categoriesList[index]));
                   });
     }),

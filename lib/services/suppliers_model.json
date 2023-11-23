@@ -1,0 +1,27 @@
+{
+  "suppliers": [
+    {
+      "name": "Resorts",
+      "subcategory": [
+        "Top Rated",
+        "Resorts",
+        "Banquet Halls",
+        "Farmhouse"
+      ]
+    },
+    {
+      "name": "Photographers",
+      "subcategory": [
+        "Ceremony",
+        "Wedding party",
+        "Wedding album"
+      ]
+    },{
+      "name": "Make - up",
+      "subcategory": [
+        "Tone nude",
+        "Tone pastel"
+      ]
+    }
+    ]
+}

@@ -13,5 +13,5 @@ const profileButtonsList = [suppliers, budget, favourite, setting, shareApp, hel
 const profileButtonsIcon = [icSearch1, icBudget, icHeart, icSetting, icShare, icHelp, icFeedback];
 
 //suppliers categories
-const categoriesList = [suppliers, photographer, makeUp];
+const categoriesList = [resort1, photographer, makeUp];
 const categoriesImages = [imgRR, imgPT, imgMake];
