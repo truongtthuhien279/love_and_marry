@@ -137,7 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   })),
                             ),
 
-                            //list top rate
+                            //list popular resort
                             10.heightBox,
                             StreamBuilder(
                               stream: FirestoreServices.getPopularProduct(),
@@ -157,18 +157,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                               decoration: BoxDecoration(
                                                 color: Colors.white,
                                                 borderRadius: BorderRadius.only(
-                                                  topLeft: Radius.circular(25),
-                                                  topRight: Radius.circular(25),
+                                                  topLeft: Radius.circular(20),
+                                                  topRight: Radius.circular(20),
                                                 ),
                                               ),
                                               child: ClipRRect(
                                                 borderRadius: BorderRadius.only(
-                                                  topLeft: Radius.circular(25),
-                                                  topRight: Radius.circular(25),
+                                                  topLeft: Radius.circular(20),
+                                                  topRight: Radius.circular(20),
                                                 ),
                                                 child: Image.network(topProData[index]['p_imgs'][0],
-                                                      width: 200,
-                                                    height: 150,
+                                                      width: 180,
+                                                    height: 130,
                                                     fit: BoxFit.cover),
                                               ),
                                             ),
@@ -240,7 +240,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               },
                             ),
 
-                            //photo + makup
+                            //list popular photo + makup
                             10.heightBox,
                             Align(
                               alignment: Alignment.topLeft,
@@ -278,7 +278,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             child: ClipRRect(
                                               borderRadius: BorderRadius.circular(10.0),
                                               // Đặt border radius cho hình ảnh
-                                              child: Image.asset(imgPT,
+                                              child: Image.network(popuPhotoMakeData[index]['p_imgs'][0],
                                                   width: 60,
                                                   height: 60,
                                                   fit: BoxFit.cover),
@@ -321,9 +321,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ],
                                       ),
                                     ),)
-
-
-
                                 );
                               },
                             ),
@@ -343,217 +340,119 @@ class _HomeScreenState extends State<HomeScreen> {
 
                             //popular dress
                             10.heightBox,
-                            SingleChildScrollView(
-                              physics: BouncingScrollPhysics(),
-                              scrollDirection: Axis.horizontal,
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Stack(
-                                    children: [
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius: BorderRadius.circular(30),
-                                        ),
-                                        child: ClipRRect(
-                                          borderRadius: BorderRadius.circular(30.0),
-                                          // Đặt border radius cho hình ảnh
-                                          child: Image.asset(imgDress1,
-                                              width: 162,
-                                              height: 252,
-                                              fit: BoxFit.cover),
-                                        ),
-                                      ),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color: greyishColor, // Màu nền xám
-                                          borderRadius: BorderRadius.circular(
-                                              100), // Đặt border radius
-                                        ),
-                                        child: Icon(Icons.favorite_outline,
-                                            size: 25, color: Colors.white)
-                                            .box
-                                            .padding(EdgeInsets.all(10.0))
-                                            .alignment(Alignment
-                                            .topRight) // Đặt căn lề bên phải
-                                            .make(),
-                                      ).marginOnly(left: 110, top: 10),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color: greyishColor,
-                                          borderRadius:
-                                          BorderRadius.circular(10), // Màu nền xám
-                                          // Đặt border radius
-                                        ),
-                                        child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            "Clara, Wedding"
-                                                .text
-                                                .color(Colors.white)
-                                                .size(15)
-                                                .fontFamily(semibold)
-                                                .fontWeight(FontWeight.bold)
-                                                .make(),
-                                            5.heightBox,
-                                            Row(
-                                              children: [
-                                                "Price: "
-                                                    .text
-                                                    .color(Colors.grey[300])
-                                                    .size(12)
-                                                    .fontFamily(semibold)
-                                                    .make(),
-                                                Icon(Icons.attach_money,
-                                                    color: Colors.grey[800],
-                                                    size: 15.0),
-                                                "230"
-                                                    .text
-                                                    .color(Colors.grey[300])
-                                                    .size(10)
-                                                    .fontFamily(semibold)
-                                                    .make(),
-                                                28.widthBox,
-                                                Icon(Icons.star_border_outlined,
-                                                    color: Colors.grey[300],
-                                                    size: 15.0),
-                                                "4.8"
-                                                    .text
-                                                    .color(Colors.grey[300])
-                                                    .size(10)
-                                                    .fontFamily(semibold)
-                                                    .make(),
-                                              ],
+                            StreamBuilder(
+                                stream: FirestoreServices.getPopularClothing(),
+                                builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                                  var topCloData = snapshot.data!.docs;
+                                 return SingleChildScrollView(
+                                    physics: BouncingScrollPhysics(),
+                                    scrollDirection: Axis.horizontal,
+                                    child: Row(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: List.generate(topCloData.length, (index) => Stack(
+                                        children: [
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius: BorderRadius.circular(30),
                                             ),
-                                          ],
-                                        )
-                                            .box
-                                            .margin(EdgeInsets.only(left: 8, top: 3))
-                                            .rounded
-                                            .width(135)
-                                            .height(52)
-                                            .make(),
+                                            child: ClipRRect(
+                                              borderRadius: BorderRadius.circular(30.0),
+                                              // Đặt border radius cho hình ảnh
+                                              child: Image.network(topCloData[index]['p_imgs'][0],
+                                                  width: 162,
+                                                  height: 252,
+                                                  fit: BoxFit.cover),
+                                            ),
+                                          ),
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              color: greyishColor, // Màu nền xám
+                                              borderRadius: BorderRadius.circular(
+                                                  100), // Đặt border radius
+                                            ),
+                                            child: Icon(Icons.favorite_outline,
+                                                size: 25, color: Colors.white)
+                                                .box
+                                                .padding(EdgeInsets.all(10.0))
+                                                .alignment(Alignment
+                                                .topRight) // Đặt căn lề bên phải
+                                                .make(),
+                                          ).marginOnly(left: 110, top: 10),
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              color: greyishColor,
+                                              borderRadius:
+                                              BorderRadius.circular(10), // Màu nền xám
+                                              // Đặt border radius
+                                            ),
+                                            child: Column(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                "${topCloData[index]['p_name']}"
+                                                    .text
+                                                    .color(Colors.white)
+                                                    .size(15)
+                                                    .fontFamily(semibold)
+                                                    .fontWeight(FontWeight.bold)
+                                                    .make(),
+                                                5.heightBox,
+                                                Row(
+                                                  children: [
+                                                    "Price: "
+                                                        .text
+                                                        .color(Colors.grey[300])
+                                                        .size(12)
+                                                        .fontFamily(semibold)
+                                                        .make(),
+                                                    Icon(Icons.attach_money,
+                                                        color: Colors.grey[800],
+                                                        size: 15.0),
+                                                    "${topCloData[index]['p_price']}"
+                                                        .numCurrency
+                                                        .text
+                                                        .color(Colors.grey[300])
+                                                        .size(10)
+                                                        .fontFamily(semibold)
+                                                        .make(),
+                                                    10.widthBox,
+                                                    Icon(Icons.star,
+                                                        color: Colors.yellow,
+                                                        size: 15.0),
+                                                    "${topCloData[index]['p_rating']}"
+                                                        .text
+                                                        .color(Colors.grey[300])
+                                                        .size(10)
+                                                        .fontFamily(semibold)
+                                                        .make(),
+                                                  ],
+                                                ),
+                                              ],
+                                            )
+                                                .box
+                                                .margin(EdgeInsets.only(left: 8, top: 3))
+                                                .rounded
+                                                .width(135)
+                                                .height(52)
+                                                .make(),
+                                          )
+                                              .box
+                                              .margin(EdgeInsets.only(left: 10, top: 184))
+                                              .make(),
+                                        ],
                                       )
                                           .box
-                                          .margin(EdgeInsets.only(left: 10, top: 184))
+                                          .roundedLg
+                                          .margin(EdgeInsets.only(bottom: 10, left: 12))
+                                          .shadowSm
+                                          .white
                                           .make(),
-                                    ],
-                                  )
-                                      .box
-                                      .roundedLg
-                                      .margin(EdgeInsets.only(bottom: 10, left: 12))
-                                      .shadowSm
-                                      .white
-                                      .make(),
-                                  15.widthBox,
-
-                                  // Popular clothes
-                                  Stack(
-                                    children: [
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius: BorderRadius.circular(30),
-                                        ),
-                                        child: ClipRRect(
-                                          borderRadius: BorderRadius.circular(30.0),
-                                          // Đặt border radius cho hình ảnh
-                                          child: Image.asset(imgSuit1,
-                                              width: 162,
-                                              height: 252,
-                                              fit: BoxFit.cover),
-                                        ),
-                                      ),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color: greyishColor, // Màu nền xám
-                                          borderRadius: BorderRadius.circular(
-                                              100), // Đặt border radius
-                                        ),
-                                        child: Icon(Icons.favorite_outline,
-                                            size: 25, color: Colors.white)
-                                            .box
-                                            .padding(EdgeInsets.all(10.0))
-                                            .alignment(Alignment
-                                            .topRight) // Đặt căn lề bên phải
-                                            .make(),
-                                      ).marginOnly(left: 110, top: 10),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color: greyishColor,
-                                          borderRadius:
-                                          BorderRadius.circular(10), // Màu nền xám
-                                          // Đặt border radius
-                                        ),
-                                        child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            "Clara, Wedding"
-                                                .text
-                                                .color(Colors.white)
-                                                .center
-                                                .size(15)
-                                                .fontFamily(semibold)
-                                                .fontWeight(FontWeight.bold)
-                                                .make(),
-                                            5.heightBox,
-                                            Row(
-                                              children: [
-                                                "Price: "
-                                                    .text
-                                                    .color(Colors.grey[300])
-                                                    .size(12)
-                                                    .fontFamily(semibold)
-                                                    .make(),
-                                                Icon(Icons.attach_money,
-                                                    color: Colors.grey[800],
-                                                    size: 15.0),
-                                                "230"
-                                                    .text
-                                                    .color(Colors.grey[300])
-                                                    .size(10)
-                                                    .fontFamily(semibold)
-                                                    .make(),
-                                                28.widthBox,
-                                                Icon(Icons.star_border_outlined,
-                                                    color: Colors.grey[300],
-                                                    size: 15.0),
-                                                "4.8"
-                                                    .text
-                                                    .color(Colors.grey[300])
-                                                    .size(10)
-                                                    .fontFamily(semibold)
-                                                    .make(),
-                                              ],
-                                            ),
-                                          ],
-                                        )
-                                            .box
-                                            .margin(EdgeInsets.only(left: 8, top: 3))
-                                            .rounded
-                                            .width(135)
-                                            .height(52)
-                                            .make(),
                                       )
-                                          .box
-                                          .margin(EdgeInsets.only(left: 10, top: 184))
-                                          .make(),
-                                    ],
-                                  )
-                                      .box
-                                      .roundedLg
-                                      .margin(EdgeInsets.only(bottom: 10, left: 12))
-                                      .shadowSm
-                                      .white
-                                      .make(),
-                                ],
-                              ),
-                            ),
-                          ],
+                                    ),);
+                                }
+                            )],
                         )),
                   ],
                 ),

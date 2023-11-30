@@ -4,6 +4,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:love_and_marry_app/consts/consts.dart';
 
 import '../../../consts/colors.dart';
+import '../../../controllers/services_controller.dart';
 
 class ItemDetails extends StatelessWidget {
   final String? title;
@@ -13,6 +14,7 @@ class ItemDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var controller =Get.find<ServiceController>();
     // var controller = Get.find<ProductController>();
     return Scaffold(
         backgroundColor: creamColor,
@@ -25,8 +27,18 @@ class ItemDetails extends StatelessWidget {
               icon: Icon(Icons.arrow_back)),
           title: title!.text.color(Colors.black).fontFamily(semibold).make(),
           actions: [
-            // IconButton(onPressed: () {}, icon: Icon(Icons.share)),
-            IconButton(onPressed: () {}, icon: Icon(Icons.favorite_outline)),
+            Obx(()=> IconButton(onPressed: () {
+              if(controller.isFav.value){
+                controller.removeFromWishList(data.id, context);
+              } else {
+                controller.addToWishList(data.id,context);
+              }
+            }, icon: Icon(
+              Icons.favorite_outlined,
+              color: controller.isFav.value ? Colors.red : darkFontGrey,)
+
+            ),
+            ),
           ],
         ),
         body: Column(children: [
@@ -71,7 +83,7 @@ class ItemDetails extends StatelessWidget {
                               maxRating: 5,
                             ),
                             10.heightBox,
-                            "${data['p_price']}".numCurrency.text.color(brownColor).fontFamily(bold).fontWeight(FontWeight.bold).size(18).make(),
+                            "${data['p_price']}".numCurrency.text.color(Colors.red).fontFamily(bold).fontWeight(FontWeight.bold).size(18).make(),
                             10.heightBox,
                       Column(
                         children: [

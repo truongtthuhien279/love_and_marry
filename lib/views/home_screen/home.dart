@@ -4,10 +4,11 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:love_and_marry_app/consts/consts.dart';
 import 'package:love_and_marry_app/controllers/home_controller.dart';
 import 'package:love_and_marry_app/views/checklist_screen/checklist_screen.dart';
-import 'package:love_and_marry_app/views/dress_screen/dress_screen.dart';
+
 import 'package:love_and_marry_app/views/forum_screen/forum_screen.dart';
 import 'package:love_and_marry_app/views/profile_screen/profile_screen.dart';
 
+import '../dress_screen/dress_screen.dart';
 import 'home_screen.dart';
 
 class Home extends StatelessWidget {
@@ -32,7 +33,6 @@ class Home extends StatelessWidget {
       const DressScreen(),
       const ForumScreen(),
       const ProfileScreen(),
-
     ];
 
     return Scaffold(

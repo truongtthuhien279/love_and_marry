@@ -5,6 +5,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:love_and_marry_app/consts/consts.dart';
 import 'package:love_and_marry_app/controllers/services_controller.dart';
 import 'package:love_and_marry_app/services/firestore_services.dart';
+import 'package:love_and_marry_app/views/dress_screen/products_detail.dart';
 import 'package:love_and_marry_app/views/supplier/suplier_categories/item_details.dart';
 import 'package:love_and_marry_app/views/widget_common/bg_widget.dart';
 import 'package:love_and_marry_app/views/widget_common/loading_indicator.dart';

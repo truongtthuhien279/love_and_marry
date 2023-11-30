@@ -57,6 +57,8 @@ const suppliers = "Suppliers",
 //Supplier categories
 const resort1 = "Resorts", photographer = "Photographers", makeUp = "Make - up";
 
+//profile string
+
 
 
 
