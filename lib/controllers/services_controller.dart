@@ -30,18 +30,41 @@ class ServiceController extends GetxController{
     quanity.value = 0;
     colorIndex.value = 0;
   }
-  addToWishList(docId,context) async {
-    await firestore.collection(productsCollection).doc(docId).set({
-      'p_favlist': FieldValue.arrayUnion([currentUser!.uid])
-    }, SetOptions(merge: true));
-    isFav(true);
-    VxToast.show(context, msg: "Added to wishlist");
+  addToWishList(docId, context) async {
+    try {
+      // Lấy thông tin hiện tại của sản phẩm
+
+      print("id in add to wlist----- "+docId);
+      final productDoc = await firestore.collection(productsCollection).doc(docId).get();
+      if (productDoc.exists) {
+        // Lấy giá trị hiện tại của trường p_favlist
+        int currentFavValue = productDoc.data()?['p_favlist'] ?? 0;
+
+        // Cập nhật trường p_favlist thành 1 nếu nó là 0, và ngược lại
+        int newFavValue = currentFavValue == 0 ? 1 : 0;
+
+        // Thực hiện cập nhật trên Firestore
+        await firestore.collection(productsCollection).doc(docId).update({
+          'p_favlist': newFavValue,
+        });
+
+        // Cập nhật trạng thái isFav nếu cần
+        isFav(newFavValue == 1);
+
+        // Hiển thị thông báo
+        VxToast.show(context, msg: newFavValue == 1 ? "Added to wishlist" : "Removed from wishlist");
+      } else {
+        print("Product not found");
+      }
+    } catch (error) {
+      print('Error updating p_favlist: $error');
+    }
   }
 
   removeFromWishList(docId,context) async {
-    await firestore.collection(productsCollection).doc(docId).set({
-      'p_favlist': FieldValue.arrayRemove([currentUser!.uid])
-    }, SetOptions(merge: true));
+    await firestore.collection(productsCollection)
+        .doc(docId)
+        .update({'p_favlist': 1});
     isFav(false);
     VxToast.show(context, msg: "Removed from wishlist");
   }

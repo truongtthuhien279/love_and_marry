@@ -27,11 +27,8 @@ class ProductsDetail extends StatelessWidget {
           actions: [
             // IconButton(onPressed: () {}, icon: Icon(Icons.share)),
             Obx(()=> IconButton(onPressed: () {
-                if(controller.isFav.value){
-                  controller.removeFromWishList(data.id, context);
-                } else {
+                  print("data id -----------" + data.id);
                   controller.addToWishList(data.id,context);
-                }
               }, icon: Icon(
                 Icons.favorite_outlined,
                 color: controller.isFav.value ? Colors.red : darkFontGrey,)

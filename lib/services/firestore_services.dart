@@ -24,15 +24,14 @@ class FirestoreServices {
     return firestore.collection(popularPrCollection).where('p_service',  whereIn: ['Photographers','Make-up']).snapshots();
 
   }  static getPopularClothing(){
-    return firestore.collection(popularPrCollection).where('p_service',  whereIn: ['Dress', 'Suits']).snapshots();
+    return firestore.collection(popularPrCollection).where('p_service',  whereIn: ['Dress', 'Suits']).limit(3).snapshots();
 
   }
   static getDress(){
-    return firestore.collection(popularPrCollection).where('p_service',  whereIn: ['Dress', 'Suits']).snapshots();
-
+    return firestore.collection(productsCollection).where('p_service',  whereIn: ['Dress', 'Suits']).snapshots();
   }
 
   static getFavorite() {
-    return firestore.collection(productsCollection).snapshots();
+    return firestore.collection(productsCollection).where('p_favlist', isEqualTo: 1).snapshots();
 }
 }
