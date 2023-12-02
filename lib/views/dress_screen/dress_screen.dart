@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:love_and_marry_app/consts/consts.dart';
+import 'package:love_and_marry_app/controllers/services_controller.dart';
 import 'package:love_and_marry_app/services/firestore_services.dart';
 import 'package:love_and_marry_app/views/dress_screen/products_detail.dart';
 import 'package:love_and_marry_app/views/dress_screen/suits_screen.dart';
@@ -24,6 +25,7 @@ class DressScreen extends StatefulWidget {
 class _DressScreenState extends State<DressScreen> {
   @override
   Widget build(BuildContext context) {
+    var controller =Get.put(ServiceController());
     return Container(
       color: creamColor,
       width: context.screenWidth,
