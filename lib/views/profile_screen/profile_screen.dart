@@ -173,6 +173,7 @@ class ProfileScreen extends StatelessWidget {
               switch(index) {
               case 0:
               Get.to(() => CategoriesScreen());
+              //break
               break;
               case 1:
               Get.to(() => BudgetScreen());
