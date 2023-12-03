@@ -475,20 +475,22 @@ class _ForumScreenState extends State<ForumScreen> {
                                 SizedBox(
                                   width: 15,
                                 ),
-                                Align(
-                                  alignment: Alignment.bottomLeft,
-                                  child: "sunday 7-nov-23"
-                                      .text
-                                      .fontFamily(semibold)
-                                      .fontWeight(FontWeight.bold)
-                                      .size(13)
-                                      .color(fontGrey)
+                                SingleChildScrollView(
+                                  child: Align(
+                                    alignment: Alignment.bottomLeft,
+                                    child: "sunday 7-nov-23"
+                                        .text
+                                        .fontFamily(semibold)
+                                        .fontWeight(FontWeight.bold)
+                                        .size(13)
+                                        .color(fontGrey)
+                                        .make(),
+                                  )
+                                      .box
+                                      .margin(EdgeInsets.only(left: 12))
+                                      .padding(EdgeInsets.only(left: 7))
                                       .make(),
-                                )
-                                    .box
-                                    .margin(EdgeInsets.only(left: 12))
-                                    .padding(EdgeInsets.only(left: 7))
-                                    .make(),
+                                ),
                               ],
                             )
 
@@ -701,40 +703,42 @@ class _ForumScreenState extends State<ForumScreen> {
                                 ),
                                 SizedBox(width: 15),
                                 // Khoảng trống giữa hai icon
-                                Stack(
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () {
-                                        // Xử lý sự kiện khi nhấp vào biểu tượng xem
-                                      },
-                                      child: Icon(
-                                        Icons.remove_red_eye,
-                                        color: textfieldGrey,
-                                        // Màu của biểu tượng xem
-                                        size: 35,
-                                      ),
-                                    ),
-                                    Positioned(
-                                      top: -3,
-                                      right: 0,
-                                      child: Container(
-                                        padding: EdgeInsets.all(4),
-                                        decoration: BoxDecoration(
-                                          color: greyColor,
-                                          // Màu nền của số lượt xem
-                                          shape: BoxShape.circle,
+                                SingleChildScrollView(
+                                  child: Stack(
+                                    children: [
+                                      GestureDetector(
+                                        onTap: () {
+                                          // Xử lý sự kiện khi nhấp vào biểu tượng xem
+                                        },
+                                        child: Icon(
+                                          Icons.remove_red_eye,
+                                          color: textfieldGrey,
+                                          // Màu của biểu tượng xem
+                                          size: 35,
                                         ),
-                                        child: Text(
-                                          "1",
-                                          // Thay thế bằng số lượt xem thực tế
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 12,
+                                      ),
+                                      Positioned(
+                                        top: -3,
+                                        right: 0,
+                                        child: Container(
+                                          padding: EdgeInsets.all(4),
+                                          decoration: BoxDecoration(
+                                            color: greyColor,
+                                            // Màu nền của số lượt xem
+                                            shape: BoxShape.circle,
+                                          ),
+                                          child: Text(
+                                            "1",
+                                            // Thay thế bằng số lượt xem thực tế
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 12,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                                 SizedBox(
                                   width: 15,
@@ -789,6 +793,8 @@ class _ForumScreenState extends State<ForumScreen> {
                                 SizedBox(
                                   width: 15,
                                 ),
+                                
+                                
                                 Align(
                                   alignment: Alignment.bottomLeft,
                                   child: "thursday 20-sep-23"

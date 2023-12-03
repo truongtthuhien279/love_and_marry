@@ -21,3 +21,10 @@ const Color greyishColor = Color(0x661d1d1d);
 
 const Color golden = Color.fromRGBO(255, 168, 0, 1);
 const Color colorRes = Color.fromRGBO(167, 122, 87, 1);
+const Color budColor = Color.fromRGBO(30, 39, 66, 1);
+const Color budColor1 = Color.fromRGBO(167, 122, 87, 1);
+const Color budColor2 = Color.fromRGBO(161, 103, 98, 1);
+const Color budColor3 = Color.fromRGBO(240, 181, 148, 1);
+const Color budColor4 = Color.fromRGBO(218, 240, 246, 1);
+const Color budColor5 = Color.fromRGBO(220, 223, 240, 1);
+const Color budColor6 = Color.fromRGBO(254, 240, 208, 1);

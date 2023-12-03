@@ -50,3 +50,8 @@ const imgAvata2 = "assets/images/avata2.png";
 const imgLocation = "assets/images/imgLocation.png";
 
 
+//budget
+const icdressB = "assets/icons/dressB.png";
+const icresortB = "assets/icons/resortB.png";
+const icsuitB = "assets/icons/suitB.png";
+const icAdd2 = "assets/images/add (1).png";

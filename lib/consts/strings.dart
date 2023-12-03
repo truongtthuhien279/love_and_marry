@@ -52,6 +52,8 @@ const suppliers = "Suppliers",
     shareApp = "Share the app",
     help = "Help",
     feedback = "Give us your feedback";
+const dressB = "Dress", resortB = "Resort", suitB = "Suit";
+const dayB = "10 jan 2022";
 
 
 //Supplier categories
@@ -60,6 +62,8 @@ const resort1 = "Resorts", photographer = "Photographers", makeUp = "Make - up";
 //profile string
 
 
-
+//budget
+const editBudget = "Edit Budget";
+const newExpenseB = "Add New Expense";
 
 

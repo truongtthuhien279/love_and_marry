@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:love_and_marry_app/consts/consts.dart';
+import 'package:love_and_marry_app/views/budget/budget_screen.dart';
 import 'package:love_and_marry_app/views/favorite_screen/favorite_screen.dart';
 import 'package:love_and_marry_app/views/widget_common/bg_widget.dart';
 
@@ -174,6 +175,7 @@ class ProfileScreen extends StatelessWidget {
               Get.to(() => CategoriesScreen());
               break;
               case 1:
+              Get.to(() => BudgetScreen());
               break;
               case 2:
               Get.to(() => FavoriteScreen());

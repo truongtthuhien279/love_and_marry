@@ -15,3 +15,8 @@ const profileButtonsIcon = [icSearch1, icBudget, icHeart, icSetting, icShare, ic
 //suppliers categories
 const categoriesList = [resort1, photographer, makeUp];
 const categoriesImages = [imgRR, imgPT, imgMake];
+
+//budget
+const budgetButtonsList = [dressB, resortB, suitB];
+const budgetButtonsIcon = [icdressB, icresortB, icsuitB];
+const budgetDay = [dayB];
