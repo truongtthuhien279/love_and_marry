@@ -3,16 +3,24 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:love_and_marry_app/consts/consts.dart';
+import 'package:love_and_marry_app/consts/firebase_consts.dart';
 import 'package:love_and_marry_app/controllers/services_controller.dart';
+import 'package:love_and_marry_app/services/firestore_services.dart';
 import '../../consts/colors.dart';
 
-class ProductsDetail extends StatelessWidget {
+class ProductsDetail extends StatefulWidget {
   final String? title;
   final dynamic data;
   const ProductsDetail({super.key, this.data, this.title});
 
   @override
+  State<ProductsDetail> createState() => _ProductsDetailState();
+}
+
+class _ProductsDetailState extends State<ProductsDetail> {
+  @override
   Widget build(BuildContext context) {
+    FirestoreServices firestoreServices = new FirestoreServices();
     var controller =Get.find<ServiceController>();
     return Scaffold(
         backgroundColor: creamColor,
@@ -23,17 +31,35 @@ class ProductsDetail extends StatelessWidget {
                 Get.back();
               },
               icon: Icon(Icons.arrow_back)),
-          title: title!.text.color(Colors.black).fontFamily(semibold).make(),
+          title: widget.title!.text.color(Colors.black).fontFamily(semibold).make(),
           actions: [
             // IconButton(onPressed: () {}, icon: Icon(Icons.share)),
-            Obx(()=> IconButton(onPressed: () {
-                  print("data id -----------" + data.id);
-                  controller.addToWishList(data.id,context);
-              }, icon: Icon(
-                Icons.favorite_outlined,
-                color: controller.isFav.value ? Colors.red : darkFontGrey,)
-
-              ),
+            FutureBuilder<bool>(
+              future: controller.checkIfFav(widget.data.id),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  // Trạng thái đang chờ, có thể hiển thị một tiện ích đợi hoặc làm gì đó khác.
+                  return CircularProgressIndicator();
+                } else if (snapshot.hasError) {
+                  // Xử lý lỗi nếu có
+                  return Text('Error: ${snapshot.error}');
+                } else {
+                  // Trạng thái đã hoàn thành, sử dụng giá trị snapshot.data để xác định màu sắc của IconButton.
+                  bool isFav = snapshot.data ?? false;
+                  return IconButton(
+                    onPressed: () async {
+                      await controller.addToWishList(widget.data.id, context);
+                    setState(()  {
+                    });
+                      // Không cần phải chờ ở đây vì đã sử dụng FutureBuilder
+                    },
+                    icon: Icon(
+                      Icons.favorite_outlined,
+                      color: isFav ? Colors.red : Colors.grey,
+                    ),
+                  );
+                }
+              },
             ),
           ],
         ),
@@ -50,18 +76,18 @@ class ProductsDetail extends StatelessWidget {
                             VxSwiper.builder(
                                 autoPlay: true,
                                 height: 320,
-                                itemCount: data['p_imgs'].length,
+                                itemCount: widget.data['p_imgs'].length,
                                 aspectRatio: 16 / 9,
                                 viewportFraction: 1.0,
                                 itemBuilder: (context, index) {
                                   return Image.network(
-                                    data["p_imgs"][index],
+                                    widget.data["p_imgs"][index],
                                     width: double.infinity,
                                     fit: BoxFit.cover,
                                   );
                                 }),
                             10.heightBox,
-                            title!.text
+                            widget.title!.text
                                 .size(16)
                                 .color(brownLine)
                                 .fontFamily(semibold).fontWeight(FontWeight.bold)
@@ -70,7 +96,7 @@ class ProductsDetail extends StatelessWidget {
                             //Rating
                             VxRating(
                               isSelectable: false,
-                              value: double.parse(data["p_rating"]),
+                              value: double.parse(widget.data["p_rating"]),
                               onRatingUpdate: (value) {},
                               normalColor: textfieldGrey,
                               selectionColor: golden,
@@ -79,7 +105,7 @@ class ProductsDetail extends StatelessWidget {
                               maxRating: 5,
                             ),
                             10.heightBox,
-                            "${data['p_price']}".numCurrency.text.color(Colors.red).fontFamily(bold).fontWeight(FontWeight.bold).size(18).make(),
+                            "${widget.data['p_price']}".numCurrency.text.color(Colors.red).fontFamily(bold).fontWeight(FontWeight.bold).size(18).make(),
                             10.heightBox,
                             Column(
                               children: [
@@ -95,7 +121,7 @@ class ProductsDetail extends StatelessWidget {
                                       ),
                                       Align(
                                         alignment: Alignment.topLeft,
-                                        child: "${data['p_location']}"
+                                        child: "${widget.data['p_location']}"
                                             .text
                                             .fontFamily(bold)
                                             .size(15)
@@ -112,7 +138,7 @@ class ProductsDetail extends StatelessWidget {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  "${data['p_serviceroom']}"
+                                  "${widget.data['p_serviceroom']}"
                                       .text
                                       .size(20)
                                       .color(Colors.white)
@@ -139,7 +165,7 @@ class ProductsDetail extends StatelessWidget {
                                 10.heightBox,
                                 Align(
                                   alignment: Alignment.topLeft,
-                                  child: "${data['p_desc']}"
+                                  child: "${widget.data['p_desc']}"
                                       .text
                                       .fontFamily(bold)
                                       .size(18)

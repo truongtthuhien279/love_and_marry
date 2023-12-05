@@ -293,7 +293,7 @@ class _DressScreenState extends State<DressScreen> {
                                           .shadowSm
                                           .white
                                           .make().onTap(() {
-                                        Get.to(() => ProductsDetail(title: "${alldress[index]['p_name']}",data: alldress [index]));
+                                        Get.to(() => ProductsDetail(title: "${alldress[index]['p_name']}",data: alldress[index]));
                                       }),
                                       // Popular clothes
                                     ],
