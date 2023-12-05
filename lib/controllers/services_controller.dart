@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:love_and_marry_app/models/suppliers_model.dart';
@@ -31,33 +32,41 @@ class ServiceController extends GetxController{
     colorIndex.value = 0;
   }
   addToWishList(docId, context) async {
-    try {
-      // Lấy thông tin hiện tại của sản phẩm
+    String? userid = currentUser?.uid.toString();
+    // Lấy reference đến bảng favorites cho người dùng hiện tại
+    if (currentUser != null) {
+      DocumentReference userFavoritesRef =  firestore.collection(favoriteCollection).doc(userid);
+      // Lấy dữ liệu hiện tại trong bảng favorites của người dùng
+      DocumentSnapshot userFavoritesSnapshot = await userFavoritesRef.get();
 
-      print("id in add to wlist----- "+docId);
-      final productDoc = await firestore.collection(productsCollection).doc(docId).get();
-      if (productDoc.exists) {
-        // Lấy giá trị hiện tại của trường p_favlist
-        int currentFavValue = productDoc.data()?['p_favlist'] ?? 0;
+      if (userFavoritesSnapshot.exists) {
+        // Nếu bảng favorites của người dùng đã tồn tại, thêm sản phẩm vào danh sách yêu thích
+        List<dynamic> productIds = userFavoritesSnapshot['product_id'];
+        //nếu sản phẩm đã được yêu thích rồi thì remove yêu thích (yêu thích 2 lần)
+        if(productIds.contains(docId)){
+          await userFavoritesRef.update({
+            'product_id': FieldValue.arrayRemove([docId]),
+          });
+          // Thông báo cho người dùng rằng sản phẩm đã được xóa khỏi danh sách yêu thích
+          VxToast.show(context, msg: 'Đã xóa khỏi yêu thích');
+        } else {
+          await userFavoritesRef.set({
+            'product_id': [docId],
+            'user_id': currentUser?.uid.toString(),
+          });
 
-        // Cập nhật trường p_favlist thành 1 nếu nó là 0, và ngược lại
-        int newFavValue = currentFavValue == 0 ? 1 : 0;
-
-        // Thực hiện cập nhật trên Firestore
-        await firestore.collection(productsCollection).doc(docId).update({
-          'p_favlist': newFavValue,
-        });
-
-        // Cập nhật trạng thái isFav nếu cần
-        isFav(newFavValue == 1);
-
-        // Hiển thị thông báo
-        VxToast.show(context, msg: newFavValue == 1 ? "Added to wishlist" : "Removed from wishlist");
+          // Thông báo cho người dùng rằng sản phẩm đã được thêm vào danh sách yêu thích
+          VxToast.show(context, msg: 'Đã thêm vào danh sách yêu thích');
+        }
       } else {
-        print("Product not found");
+        // Nếu bảng favorites của người dùng chưa tồn tại, tạo mới và thêm sản phẩm vào danh sách yêu thích
+        await userFavoritesRef.set({
+          'user_id': [currentUser?.uid.toString()],
+          'product_id': [docId,docId,docId],
+        });
       }
-    } catch (error) {
-      print('Error updating p_favlist: $error');
+    } else {
+      VxToast.show(context, msg: 'Bạn cần đăng nhập');
     }
   }
 
@@ -68,12 +77,11 @@ class ServiceController extends GetxController{
     isFav(false);
     VxToast.show(context, msg: "Removed from wishlist");
   }
-
-  checkIfFav(data) async {
-    if(data['p_favlist'].contains(currentUser!.uid)){
-      isFav(true);
-    } else {
-      isFav(false);
-    }
+  Future<bool> checkIfFav(String productId) async {
+    DocumentReference userFavoritesRef =
+    await firestore.collection(favoriteCollection).doc(currentUser?.uid.toString());
+    DocumentSnapshot userFavoritesSnapshot = await userFavoritesRef.get();
+    List<dynamic> productIds = userFavoritesSnapshot['product_id'];
+    return productIds.contains(productId);
   }
 }
