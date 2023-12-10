@@ -42,6 +42,7 @@ class ServiceController extends GetxController{
       if (userFavoritesSnapshot.exists) {
         // Nếu bảng favorites của người dùng đã tồn tại, thêm sản phẩm vào danh sách yêu thích
         List<dynamic> productIds = userFavoritesSnapshot['product_id'];
+        List<String> ListProductIds = List<String>.from(productIds);
         //nếu sản phẩm đã được yêu thích rồi thì remove yêu thích (yêu thích 2 lần)
         if(productIds.contains(docId)){
           await userFavoritesRef.update({
@@ -50,8 +51,9 @@ class ServiceController extends GetxController{
           // Thông báo cho người dùng rằng sản phẩm đã được xóa khỏi danh sách yêu thích
           VxToast.show(context, msg: 'Đã xóa khỏi yêu thích');
         } else {
+          ListProductIds.add(docId);
           await userFavoritesRef.set({
-            'product_id': [docId],
+            'product_id': FieldValue.arrayUnion(ListProductIds),
             'user_id': currentUser?.uid.toString(),
           });
 
@@ -62,7 +64,7 @@ class ServiceController extends GetxController{
         // Nếu bảng favorites của người dùng chưa tồn tại, tạo mới và thêm sản phẩm vào danh sách yêu thích
         await userFavoritesRef.set({
           'user_id': [currentUser?.uid.toString()],
-          'product_id': [docId,docId,docId],
+          'product_id': [docId],
         });
       }
     } else {
