@@ -8,9 +8,9 @@ import 'package:love_and_marry_app/consts/colors.dart';
 import 'package:love_and_marry_app/consts/consts.dart';
 import 'package:love_and_marry_app/consts/list.dart';
 import 'package:love_and_marry_app/services/firestore_services.dart';
-import 'package:love_and_marry_app/views/supplier/suplier_categories/item_details.dart';
 
 import '../../controllers/services_controller.dart';
+import '../supplier/suplier_categories/item_details.dart';
 import '../widget_common/loading_indicator.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -27,6 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     var controller =Get.put(ServiceController());
     return StreamBuilder(
       stream: FirestoreServices.getToprate(),
@@ -41,7 +42,6 @@ class _HomeScreenState extends State<HomeScreen> {
           );
         } else{
           var data = snapshot.data!.docs;
-
           Random random = Random();
           // print("-----------------------------" + checkOnTap.toString());
           return  Container(
@@ -146,104 +146,108 @@ class _HomeScreenState extends State<HomeScreen> {
                             StreamBuilder(
                               stream: FirestoreServices.getPopularProduct(),
                               builder:  (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
-                                var topProData = snapshot.data!.docs;
-                                return SingleChildScrollView(
-                                  physics: const BouncingScrollPhysics(),
-                                  scrollDirection: Axis.horizontal,
-                                  child: Row(
-                                      children: List.generate(
-                                        topProData.length,
-                                            (index) => Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          children: [
-                                            Container(
-                                              decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                borderRadius: BorderRadius.only(
-                                                  topLeft: Radius.circular(20),
-                                                  topRight: Radius.circular(20),
-                                                ),
-                                              ),
-                                              child: ClipRRect(
-                                                borderRadius: BorderRadius.only(
-                                                  topLeft: Radius.circular(20),
-                                                  topRight: Radius.circular(20),
-                                                ),
-                                                child: Image.network(topProData[index]['p_imgs'][0],
-                                                      width: 180,
-                                                    height: 130,
-                                                    fit: BoxFit.cover),
-                                              ),
-                                            ),
-                                            10.heightBox,
-                                            Container(
-                                              margin: EdgeInsets.only(
-                                                  left: 8, right: 8, bottom: 10),
-                                              child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                mainAxisAlignment: MainAxisAlignment.start,
-                                                children: [
-                                                  "${topProData[index]['p_name']}"
-                                                      .text
-                                                      .size(16)
-                                                      .fontWeight(FontWeight.bold)
-                                                      .make(),
-                                                  10.heightBox,
-                                                  Row(
 
-                                                    mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                    crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                    children: [
-                                                      Icon(Icons.star,
-                                                          color: Colors.yellow, size: 15.0),
-                                                      8.widthBox,
-                                                      "${topProData[index]['p_rating']}".text.size(13).make(),
-                                                      // 8.widthBox,
-                                                      // "(111 reviews)".text.size(9).make(),
-                                                      100.widthBox,
-                                                      favoriteCheck[index] == true
-                                                          ? Icon(
-                                                        Icons.favorite_sharp,
-                                                        size: 20,
-                                                        color: Colors.red,
-                                                      ).onTap(() {
-                                                        print(favoriteCheck[index]);
-                                                        setState(() {
-                                                          favoriteCheck[index] =
-                                                          !favoriteCheck[index];
-                                                        });
-                                                      })
-                                                          : Icon(
-                                                        Icons.favorite_outline,
-                                                        size: 20,
-                                                      ).onTap(() {
-                                                        setState(() {
-                                                          favoriteCheck[index] =
-                                                          !favoriteCheck[index];
-                                                        });
-                                                      })
-                                                    ],
+                                if(snapshot.connectionState == ConnectionState.waiting){
+                                  return Center(child: loadingIndicator(),);
+                                }else{
+                                  var topProData = snapshot.data!.docs;
+                                  return SingleChildScrollView(
+                                    physics: const BouncingScrollPhysics(),
+                                    scrollDirection: Axis.horizontal,
+                                    child: Row(
+                                        children: List.generate(
+                                          topProData.length,
+                                              (index) => Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children: [
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius: BorderRadius.only(
+                                                    topLeft: Radius.circular(20),
+                                                    topRight: Radius.circular(20),
                                                   ),
-                                                ],
+                                                ),
+                                                child: ClipRRect(
+                                                  borderRadius: BorderRadius.only(
+                                                    topLeft: Radius.circular(20),
+                                                    topRight: Radius.circular(20),
+                                                  ),
+                                                  child: Image.network(topProData[index]['p_imgs'][0],
+                                                      width: 180,
+                                                      height: 130,
+                                                      fit: BoxFit.cover),
+                                                ),
                                               ),
-                                            )
-                                          ],
-                                        )
-                                            .box
-                                            .roundedLg
-                                            .shadowSm
-                                            .white
-                                            .margin(EdgeInsets.symmetric(
-                                            horizontal: 8, vertical: 8))
-                                            .make()
-                                            .onTap(() {
-                                              Get.to(() => ItemDetails(title: "${topProData[index]['p_name']}",data: topProData[index]));
-                                            }),
-                                      )),
-                                );
+                                              10.heightBox,
+                                              Container(
+                                                margin: EdgeInsets.only(
+                                                    left: 8, right: 8, bottom: 10),
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                  children: [
+                                                    "${topProData[index]['p_name']}"
+                                                        .text
+                                                        .size(16)
+                                                        .fontWeight(FontWeight.bold)
+                                                        .make(),
+                                                    10.heightBox,
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                      crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                      children: [
+                                                        Icon(Icons.star,
+                                                            color: Colors.yellow, size: 15.0),
+                                                        8.widthBox,
+                                                        "${topProData[index]['p_rating']}".text.size(13).make(),
+                                                        // 8.widthBox,
+                                                        // "(111 reviews)".text.size(9).make(),
+                                                        100.widthBox,
+                                                        favoriteCheck[index] == true
+                                                            ? Icon(
+                                                          Icons.favorite_sharp,
+                                                          size: 20,
+                                                          color: Colors.red,
+                                                        ).onTap(() {
+                                                          print(favoriteCheck[index]);
+                                                          setState(() {
+                                                            favoriteCheck[index] =
+                                                            !favoriteCheck[index];
+                                                          });
+                                                        })
+                                                            : Icon(
+                                                          Icons.favorite_outline,
+                                                          size: 20,
+                                                        ).onTap(() {
+                                                          setState(() {
+                                                            favoriteCheck[index] =
+                                                            !favoriteCheck[index];
+                                                          });
+                                                        })
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                              )
+                                            ],
+                                          )
+                                              .box
+                                              .roundedLg
+                                              .shadowSm
+                                              .white
+                                              .margin(EdgeInsets.symmetric(
+                                              horizontal: 8, vertical: 8))
+                                              .make()
+                                              .onTap(() {
+                                                Get.to(() => ItemDetails(title: "${topProData[index]['p_name']}",data: topProData[index]));
+                                              }),
+                                        )),
+                                  );
+                                }
                               },
                             ),
 
@@ -263,74 +267,80 @@ class _HomeScreenState extends State<HomeScreen> {
                             StreamBuilder(
                               stream: FirestoreServices.getPopularPhotoMake(),
                               builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                                var popuPhotoMakeData = snapshot.data!.docs;
-                                return Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: List.generate(popuPhotoMakeData.length, (index) => Container(
-                                      margin: EdgeInsets.only(left: 8, bottom: 10),
-                                      padding: EdgeInsets.all(8),
-                                      decoration: BoxDecoration(
-                                        color: greyColor,
-                                        borderRadius: BorderRadius.circular(
-                                            10.0), // Đặt border radius ở đây
-                                      ),
-                                      child: Row(
-                                        children: [
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              color: Colors.grey,
-                                              borderRadius: BorderRadius.circular(10.0),
-                                            ),
-                                            child: ClipRRect(
-                                              borderRadius: BorderRadius.circular(10.0),
-                                              // Đặt border radius cho hình ảnh
-                                              child: Image.network(popuPhotoMakeData[index]['p_imgs'][0],
-                                                  width: 60,
-                                                  height: 60,
-                                                  fit: BoxFit.cover),
-                                            ),
-                                          ),
-                                          10.widthBox,
-                                          Column(
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              "${popuPhotoMakeData[index]['p_name']}"
-                                                  .text
-                                                  .size(11)
-                                                  .fontWeight(FontWeight.bold)
-                                                  .make(),
-                                              10.heightBox,
-                                              Row(
-                                                children: [
-                                                  "${popuPhotoMakeData[index]['p_supplier']}"
-                                                      .text
-                                                      .size(10)
-                                                      .fontWeight(FontWeight.normal)
-                                                      .make(),
-                                                  10.widthBox,
-                                                  "|"
-                                                      .text
-                                                      .size(10)
-                                                      .fontWeight(FontWeight.normal)
-                                                      .make(),
-                                                  10.widthBox,
-                                                  "Rate :  ${popuPhotoMakeData[index]['p_rating']}"
-                                                      .text
-                                                      .size(10)
-                                                      .fontWeight(FontWeight.normal)
-                                                      .make(),
-                                                ],
-                                              )
-                                            ],
-                                          ).box.make().onTap(() {
-                                            Get.to(() => ItemDetails(title: "${popuPhotoMakeData[index]['p_name']}",data: popuPhotoMakeData[index]));
-                                          })
-                                        ],
-                                      ),
-                                    ),)
-                                );
+                                if(snapshot.connectionState == ConnectionState.waiting){
+                                  return Center(child: loadingIndicator(),);
+                                }else{
+                                  var popuPhotoMakeData = snapshot.data!.docs;
+                                  return Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: List.generate(popuPhotoMakeData.length, (index) => Container(
+                                        margin: EdgeInsets.only(left: 8, bottom: 10),
+                                        padding: EdgeInsets.all(8),
+                                        decoration: BoxDecoration(
+                                          color: greyColor,
+                                          borderRadius: BorderRadius.circular(
+                                              10.0), // Đặt border radius ở đây
+                                        ),
+                                        child: Row(
+                                          children: [
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                color: Colors.grey,
+                                                borderRadius: BorderRadius.circular(10.0),
+                                              ),
+                                              child: ClipRRect(
+                                                borderRadius: BorderRadius.circular(10.0),
+                                                // Đặt border radius cho hình ảnh
+                                                child: Image.network(popuPhotoMakeData[index]['p_imgs'][0],
+                                                    width: 60,
+                                                    height: 60,
+                                                    fit: BoxFit.cover),
+                                              ),
+                                            ).box.make().onTap(() {
+                                              Get.to(() => ItemDetails(title: "${popuPhotoMakeData[index]['p_name']}",data: popuPhotoMakeData[index]));
+                                            }),
+                                            10.widthBox,
+                                            Column(
+                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                "${popuPhotoMakeData[index]['p_name']}"
+                                                    .text
+                                                    .size(11)
+                                                    .fontWeight(FontWeight.bold)
+                                                    .make(),
+                                                10.heightBox,
+                                                Row(
+                                                  children: [
+                                                    "${popuPhotoMakeData[index]['p_supplier']}"
+                                                        .text
+                                                        .size(10)
+                                                        .fontWeight(FontWeight.normal)
+                                                        .make(),
+                                                    10.widthBox,
+                                                    "|"
+                                                        .text
+                                                        .size(10)
+                                                        .fontWeight(FontWeight.normal)
+                                                        .make(),
+                                                    10.widthBox,
+                                                    "Rate :  ${popuPhotoMakeData[index]['p_rating']}"
+                                                        .text
+                                                        .size(10)
+                                                        .fontWeight(FontWeight.normal)
+                                                        .make(),
+                                                  ],
+                                                )
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      ),)
+                                  ).box.make().onTap(() { });
+                                }
+
+
                               },
                             ),
 
@@ -352,116 +362,121 @@ class _HomeScreenState extends State<HomeScreen> {
                             StreamBuilder(
                                 stream: FirestoreServices.getPopularClothing(),
                                 builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                                  var topCloData = snapshot.data!.docs;
-                                 return SingleChildScrollView(
-                                    physics: BouncingScrollPhysics(),
-                                    scrollDirection: Axis.horizontal,
-                                    child: Row(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      children: List.generate(topCloData.length, (index) => Stack(
-                                        children: [
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius: BorderRadius.circular(30),
-                                            ),
-                                            child: ClipRRect(
-                                              borderRadius: BorderRadius.circular(30.0),
-                                              // Đặt border radius cho hình ảnh
-                                              child: Image.network(topCloData[index]['p_imgs'][0],
-                                                  width: 162,
-                                                  height: 252,
-                                                  fit: BoxFit.cover),
-                                            ),
-                                          ),
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              color: greyishColor, // Màu nền xám
-                                              borderRadius: BorderRadius.circular(
-                                                  100), // Đặt border radius
-                                            ),
-                                            child: Icon(Icons.favorite_outline,
-                                                size: 25, color: Colors.white)
-                                                .box
-                                                .padding(EdgeInsets.all(10.0))
-                                                .alignment(Alignment
-                                                .topRight) // Đặt căn lề bên phải
-                                                .make(),
-                                          ).marginOnly(left: 110, top: 10),
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              color: greyishColor,
-                                              borderRadius:
-                                              BorderRadius.circular(10), // Màu nền xám
-                                              // Đặt border radius
-                                            ),
-                                            child: Column(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                "${topCloData[index]['p_name']}"
-                                                    .text
-                                                    .color(Colors.white)
-                                                    .size(15)
-                                                    .fontFamily(semibold)
-                                                    .fontWeight(FontWeight.bold)
-                                                    .make(),
-                                                5.heightBox,
-                                                Row(
-                                                  children: [
-                                                    "Price: "
-                                                        .text
-                                                        .color(Colors.grey[300])
-                                                        .size(12)
-                                                        .fontFamily(semibold)
-                                                        .make(),
-                                                    Icon(Icons.attach_money,
-                                                        color: Colors.grey[800],
-                                                        size: 15.0),
-                                                    "${topCloData[index]['p_price']}"
-                                                        .numCurrency
-                                                        .text
-                                                        .color(Colors.grey[300])
-                                                        .size(10)
-                                                        .fontFamily(semibold)
-                                                        .make(),
-                                                    10.widthBox,
-                                                    Icon(Icons.star,
-                                                        color: Colors.yellow,
-                                                        size: 15.0),
-                                                    "${topCloData[index]['p_rating']}"
-                                                        .text
-                                                        .color(Colors.grey[300])
-                                                        .size(10)
-                                                        .fontFamily(semibold)
-                                                        .make(),
-                                                  ],
+                                  if(snapshot.connectionState == ConnectionState.waiting){
+                                    return Center(child: loadingIndicator(),);
+                                  }else{
+                                    var topCloData = snapshot.data!.docs;
+                                    return SingleChildScrollView(
+                                      physics: BouncingScrollPhysics(),
+                                      scrollDirection: Axis.horizontal,
+                                      child: Row(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          children: List.generate(topCloData.length, (index) => Stack(
+                                            children: [
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius: BorderRadius.circular(30),
                                                 ),
-                                              ],
-                                            )
-                                                .box
-                                                .margin(EdgeInsets.only(left: 8, top: 3))
-                                                .rounded
-                                                .width(135)
-                                                .height(52)
-                                                .make(),
+                                                child: ClipRRect(
+                                                  borderRadius: BorderRadius.circular(30.0),
+                                                  // Đặt border radius cho hình ảnh
+                                                  child: Image.network(topCloData[index]['p_imgs'][0],
+                                                      width: 162,
+                                                      height: 252,
+                                                      fit: BoxFit.cover),
+                                                ),
+                                              ),
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  color: greyishColor, // Màu nền xám
+                                                  borderRadius: BorderRadius.circular(
+                                                      100), // Đặt border radius
+                                                ),
+                                                child: Icon(Icons.favorite_outline,
+                                                    size: 25, color: Colors.white)
+                                                    .box
+                                                    .padding(EdgeInsets.all(10.0))
+                                                    .alignment(Alignment
+                                                    .topRight) // Đặt căn lề bên phải
+                                                    .make(),
+                                              ).marginOnly(left: 110, top: 10),
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  color: greyishColor,
+                                                  borderRadius:
+                                                  BorderRadius.circular(10), // Màu nền xám
+                                                  // Đặt border radius
+                                                ),
+                                                child: Column(
+                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    "${topCloData[index]['p_name']}"
+                                                        .text
+                                                        .color(Colors.white)
+                                                        .size(15)
+                                                        .fontFamily(semibold)
+                                                        .fontWeight(FontWeight.bold)
+                                                        .make(),
+                                                    5.heightBox,
+                                                    Row(
+                                                      children: [
+                                                        "Price: "
+                                                            .text
+                                                            .color(Colors.grey[300])
+                                                            .size(12)
+                                                            .fontFamily(semibold)
+                                                            .make(),
+                                                        Icon(Icons.attach_money,
+                                                            color: Colors.grey[800],
+                                                            size: 15.0),
+                                                        "${topCloData[index]['p_price']}"
+                                                            .numCurrency
+                                                            .text
+                                                            .color(Colors.grey[300])
+                                                            .size(10)
+                                                            .fontFamily(semibold)
+                                                            .make(),
+                                                        10.widthBox,
+                                                        Icon(Icons.star,
+                                                            color: Colors.yellow,
+                                                            size: 15.0),
+                                                        "${topCloData[index]['p_rating']}"
+                                                            .text
+                                                            .color(Colors.grey[300])
+                                                            .size(10)
+                                                            .fontFamily(semibold)
+                                                            .make(),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                )
+                                                    .box
+                                                    .margin(EdgeInsets.only(left: 8, top: 3))
+                                                    .rounded
+                                                    .width(135)
+                                                    .height(52)
+                                                    .make(),
+                                              )
+                                                  .box
+                                                  .margin(EdgeInsets.only(left: 10, top: 184))
+                                                  .make(),
+                                            ],
                                           )
                                               .box
-                                              .margin(EdgeInsets.only(left: 10, top: 184))
-                                              .make(),
-                                        ],
-                                      )
-                                          .box
-                                          .roundedLg
-                                          .margin(EdgeInsets.only(bottom: 10, left: 12))
-                                          .shadowSm
-                                          .white
-                                          .make().onTap(() {
-                                        Get.to(() => ItemDetails(title: "${topCloData[index]['p_name']}",data: topCloData[index]));
-                                      }),
-                                      )
-                                    ),);
+                                              .roundedLg
+                                              .margin(EdgeInsets.only(bottom: 10, left: 12))
+                                              .shadowSm
+                                              .white
+                                              .make().onTap(() {
+                                            Get.to(() => ItemDetails(title: "${topCloData[index]['p_name']}",data: topCloData[index]));
+                                          }),
+                                          )
+                                      ),);
+                                  }
+
                                 }
                             )],
                         )),
