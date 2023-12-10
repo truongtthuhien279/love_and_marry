@@ -8,7 +8,10 @@ import 'package:love_and_marry_app/consts/colors.dart';
 import 'package:love_and_marry_app/consts/consts.dart';
 import 'package:love_and_marry_app/consts/list.dart';
 import 'package:love_and_marry_app/services/firestore_services.dart';
-import 'package:love_and_marry_app/views/widget_common/loadingIndicator.dart';
+import 'package:love_and_marry_app/views/supplier/suplier_categories/item_details.dart';
+
+import '../../controllers/services_controller.dart';
+import '../widget_common/loading_indicator.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -24,6 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var controller =Get.put(ServiceController());
     return StreamBuilder(
       stream: FirestoreServices.getToprate(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -187,6 +191,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       .make(),
                                                   10.heightBox,
                                                   Row(
+
                                                     mainAxisAlignment:
                                                     MainAxisAlignment.start,
                                                     crossAxisAlignment:
@@ -234,7 +239,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                             .margin(EdgeInsets.symmetric(
                                             horizontal: 8, vertical: 8))
                                             .make()
-                                            .onTap(() {}),
+                                            .onTap(() {
+                                              Get.to(() => ItemDetails(title: "${topProData[index]['p_name']}",data: topProData[index]));
+                                            }),
                                       )),
                                 );
                               },
@@ -317,7 +324,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 ],
                                               )
                                             ],
-                                          )
+                                          ).box.make().onTap(() {
+                                            Get.to(() => ItemDetails(title: "${popuPhotoMakeData[index]['p_name']}",data: popuPhotoMakeData[index]));
+                                          })
                                         ],
                                       ),
                                     ),)
@@ -448,7 +457,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                           .margin(EdgeInsets.only(bottom: 10, left: 12))
                                           .shadowSm
                                           .white
-                                          .make(),
+                                          .make().onTap(() {
+                                        Get.to(() => ItemDetails(title: "${topCloData[index]['p_name']}",data: topCloData[index]));
+                                      }),
                                       )
                                     ),);
                                 }

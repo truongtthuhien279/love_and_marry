@@ -21,8 +21,8 @@ class FavoriteScreen extends StatefulWidget {
 class _FavoriteScreenState extends State<FavoriteScreen> {
   @override
   Widget build(BuildContext context) {
-    var controller = Get.find<ServiceController>();
     FirestoreServices firestoreServices = new FirestoreServices();
+    var controller = Get.find<ServiceController>();
     return Scaffold(
       backgroundColor: creamColor,
       appBar: AppBar(
