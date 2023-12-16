@@ -273,7 +273,7 @@ class BudgetScreen extends StatelessWidget {
                                                     .size(15)
                                                     .fontWeight(FontWeight.bold)
                                                     .make(),
-                                                193.widthBox,
+                                                170.widthBox,
                                                 "\$544"
                                                     .text
                                                     .size(10)
@@ -290,7 +290,7 @@ class BudgetScreen extends StatelessWidget {
                                                       .size(10)
                                                       .fontWeight(FontWeight.normal)
                                                       .make(),
-                                                  155.widthBox,
+                                                  140.widthBox,
                                                   "In Card"
                                                       .text
                                                       .size(10)
@@ -343,8 +343,8 @@ class BudgetScreen extends StatelessWidget {
                                                       .size(15)
                                                       .fontWeight(FontWeight.bold)
                                                       .make(),
-                                                  153.widthBox,
-                                                  "\$54,417.80 "
+                                                  170.widthBox,
+                                                  "\$547"
                                                       .text
                                                       .size(10)
                                                       .fontWeight(FontWeight.normal)
@@ -360,7 +360,7 @@ class BudgetScreen extends StatelessWidget {
                                                     .size(10)
                                                     .fontWeight(FontWeight.normal)
                                                     .make(),
-                                                170.widthBox,
+                                                140.widthBox,
                                                 "Card"
                                                     .text
                                                     .size(10)
@@ -412,7 +412,7 @@ class BudgetScreen extends StatelessWidget {
                                                       .size(15)
                                                       .fontWeight(FontWeight.bold)
                                                       .make(),
-                                                  195.widthBox,
+                                                  170.widthBox,
                                                   "\$54.80 "
                                                       .text
                                                       .size(10)
@@ -429,7 +429,7 @@ class BudgetScreen extends StatelessWidget {
                                                     .size(10)
                                                     .fontWeight(FontWeight.normal)
                                                     .make(),
-                                                160.widthBox,
+                                                140.widthBox,
                                                 "Online"
                                                     .text
                                                     .size(10)
