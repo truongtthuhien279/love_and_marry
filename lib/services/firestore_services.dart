@@ -25,6 +25,9 @@ class FirestoreServices {
   static getPopularProduct(){
       return firestore.collection(popularPrCollection).where('p_service',  whereIn: ['Resorts']).snapshots();
   }
+  static getCategory(){
+    return firestore.collection(serviceCollection).snapshots();
+  }
   static getPopularPhotoMake(){
     return firestore.collection(popularPrCollection).where('p_service',  whereIn: ['Photographers','Make-up']).snapshots();
 

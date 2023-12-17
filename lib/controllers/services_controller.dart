@@ -86,4 +86,56 @@ class ServiceController extends GetxController{
     List<dynamic> productIds = userFavoritesSnapshot['product_id'];
     return productIds.contains(productId);
   }
+  static  getProductPrice(String p_name, String category) async {
+    try {
+      QuerySnapshot querySnapshot = await firestore
+          .collection(productsCollection) // Replace with your actual collection name
+          .where('p_name', isEqualTo: p_name)
+          .where('p_service', isEqualTo: category)
+          .get();
+      if (querySnapshot.docs.isNotEmpty) {
+        return querySnapshot.docs.first;
+      } else {
+        return null; // Document not found
+      }
+    } catch (e) {
+      print('Error getting product price: $e');
+      return null;
+    }
+  }
+  addToBudget(String p_name, String category) async {
+    String? userid = currentUser?.uid.toString();
+    //tìm id của sản phẩm
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection(productsCollection)
+        .where('p_name', isEqualTo: p_name)
+        .where('p_service', isEqualTo: category)
+        .get();
+    String productId = querySnapshot.docs[0].id;
+
+    //lưu sản phẩm vào budget
+    if (currentUser != null) {
+      DocumentReference userFavoritesRef =  firestore.collection(budgetCollection).doc(userid);
+      // Lấy dữ liệu hiện tại trong bảng budget của người dùng
+      DocumentSnapshot userFavoritesSnapshot = await userFavoritesRef.get();
+
+      if (userFavoritesSnapshot.exists) {
+        // Nếu bảng budget của người dùng đã tồn tại, thêm sản phẩm vào danh sách yêu thích
+        List<dynamic> productIds = userFavoritesSnapshot['product_id'];
+        List<String> ListProductIds = List<String>.from(productIds);
+          ListProductIds.add(productId);
+          await userFavoritesRef.set({
+            'product_id': FieldValue.arrayUnion(ListProductIds),
+            'user_id': currentUser?.uid.toString(),
+           });
+        } else {
+        // Nếu bảng favorites của người dùng chưa tồn tại, tạo mới và thêm sản phẩm vào danh sách yêu thích
+        await userFavoritesRef.set({
+          'user_id': [currentUser?.uid.toString()],
+          'product_id': [productId],
+        });
+      }
+    } else {
+    }
+  }
 }
