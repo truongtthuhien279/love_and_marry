@@ -17,6 +17,9 @@ class AddNewExpenseScreen extends StatefulWidget {
 }
 
 class _AddNewExpenseScreenState extends State<AddNewExpenseScreen> {
+  int finalCost = int.parse(Get.arguments['final_cost'].toString());
+  var fianlCostSt = Get.arguments['final_cost'];
+
   String? selectedCategory;
   final FocusNode _productNameFocus = FocusNode();
   TextEditingController _productNameController = TextEditingController();
@@ -43,7 +46,7 @@ class _AddNewExpenseScreenState extends State<AddNewExpenseScreen> {
       if (productSnapshot != null && productSnapshot.exists) {
         var productData = productSnapshot.data() as Map<String, dynamic>;
         var productPrice = productData['p_price'];
-        print("====== " + productPrice);
+        // print("====== " + productPrice);
         price = productPrice;
         setState(() {
           _conceptController.text = productPrice.toString();
@@ -212,7 +215,9 @@ class _AddNewExpenseScreenState extends State<AddNewExpenseScreen> {
                 ElevatedButton(
                   onPressed: (){
                     print(price);
-                    if(price != null)
+                    print(finalCost);
+                    print(fianlCostSt);
+                    if (price != null && int.parse(price) <= finalCost)
                       {
                         setState(() {
                           controller.addToBudget(_productNameController.text, selectedCategory!);
