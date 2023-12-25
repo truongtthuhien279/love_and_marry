@@ -115,5 +115,43 @@ class FirestoreServices {
     }
     return []; // Trả về một danh sách trống nếu không có dữ liệu
   }
+  static editEstimateCost(int cost) async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if(user != null){
+      QuerySnapshot userSnapshot = await FirebaseFirestore.instance
+          .collection(budgetCollection)
+          .where('user_id', isEqualTo: user.uid)
+          .get();
+      Map<String, dynamic> userData = userSnapshot.docs.first.data() as Map<String, dynamic>;
+      int amountSpent = userData['amount_spent'];
+      int finalCost = userData['final_cost'];
+      String documentId = userSnapshot.docs.first.id;
+      int newFinalCost = cost - amountSpent;
+      await FirebaseFirestore.instance
+          .collection(budgetCollection)
+          .doc(documentId)
+          .update({'estimate_cost': cost,'final_cost': newFinalCost});
+    } else{
+      return [];
+    }
+  }
+  static deleteBudget(String id) async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if(user != null){
+      QuerySnapshot userSnapshot = await FirebaseFirestore.instance
+          .collection(budgetCollection)
+          .where('user_id', isEqualTo: user.uid)
+          .get();
+      Map<String, dynamic> userData = userSnapshot.docs.first.data() as Map<String, dynamic>;
+      List<String> productIds = List<String>.from(userData['product_id'] ?? []);
+      // Xóa phần tử có id nhất định
+      productIds.removeWhere((productId) => productId == id.toString());
 
+      // Cập nhật lại dữ liệu trong Firestore
+      await FirebaseFirestore.instance
+          .collection(budgetCollection)
+          .doc(userSnapshot.docs.first.id)
+          .update({'product_id': productIds});
+    }
+  }
 }

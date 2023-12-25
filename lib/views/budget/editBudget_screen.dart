@@ -1,18 +1,35 @@
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:love_and_marry_app/consts/consts.dart';
+import 'package:love_and_marry_app/consts/firebase_consts.dart';
+import 'package:love_and_marry_app/services/firestore_services.dart';
 import 'package:love_and_marry_app/views/widget_common/bg_widget.dart';
-import 'package:love_and_marry_app/views/widget_common/custom_textfield.dart';
-
 import '../../consts/strings.dart';
 import '../../consts/styles.dart';
-import '../widget_common/our_button.dart';
 
 class EditBudgetScreen extends StatelessWidget {
   const EditBudgetScreen({Key? key}) : super(key: key);
 
+    String? validateBudget(String? value) {
+      if (value == null || value.isEmpty) {
+        return 'Please enter a budget';
+      }
+      try {
+        double.parse(value);
+      } catch (e) {
+        return 'Please enter a valid number';
+      }
+      return null;
+    }
+
   @override
   Widget build(BuildContext context) {
+    TextEditingController budgetController = TextEditingController();
+    var estimatedCost = Get.arguments['estimated_cost'];
+    var amountSpent = Get.arguments['amount_spent'];
+    budgetController.text = estimatedCost.toString();
     return bgWidget(
       child: Scaffold(
         appBar: AppBar(
@@ -55,16 +72,20 @@ class EditBudgetScreen extends StatelessWidget {
                 Column(
                   children: [
                     TextFormField(
+                      controller: budgetController,
+                      validator: validateBudget,
+                      // initialValue: estimatedCost.toString(), // Convert the value to String
                       decoration: InputDecoration(
                         labelText: "\$",
                         labelStyle: TextStyle(fontSize: 30),
-                        hintText: "420000",
+                        hintText: "Enter Budget",
                         hintStyle: TextStyle(color: Colors.grey, fontSize: 18),
                         filled: true,
                         fillColor: Colors.white,
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20), // Đặt độ cong ở đây
-                          borderSide: BorderSide(color: brownColor),),
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: BorderSide(color: brownColor),
+                        ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
                           borderSide: BorderSide(color: brownColor),
@@ -75,7 +96,20 @@ class EditBudgetScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 50,),
                 ElevatedButton(
-                  onPressed: (){},
+                  onPressed: () async {
+                    try {
+                      int enteredBudget = int.parse(budgetController.text);
+                      if (enteredBudget >= amountSpent) {
+                        await FirestoreServices.editEstimateCost(enteredBudget);
+                        budgetController.text = "";
+                        VxToast.show(context, msg: "Estimated Cost edited success!");
+                      } else {
+                        VxToast.show(context, msg: "Estimated Cost is invalid!");
+                      }
+                    } catch (e) {
+                      VxToast.show(context, msg: "Please enter a valid number");
+                    }
+                  },
                   child: 'Save'.text.fontWeight(FontWeight.bold).minFontSize(25).color(Colors.white).make(),
                   style: ElevatedButton.styleFrom(
                     primary: brownColor,

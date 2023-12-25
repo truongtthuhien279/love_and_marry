@@ -86,7 +86,7 @@ class ServiceController extends GetxController{
     List<dynamic> productIds = userFavoritesSnapshot['product_id'];
     return productIds.contains(productId);
   }
-  static  getProductPrice(String p_name, String category) async {
+  static getProductPrice(String p_name, String category) async {
     try {
       QuerySnapshot querySnapshot = await firestore
           .collection(productsCollection) // Replace with your actual collection name
@@ -103,6 +103,7 @@ class ServiceController extends GetxController{
       return null;
     }
   }
+
   Future<void> addToBudget(String p_name, String category) async {
     String? userid = currentUser?.uid.toString();
     // Tìm id của sản phẩm
@@ -111,13 +112,11 @@ class ServiceController extends GetxController{
         .where('p_name', isEqualTo: p_name)
         .where('p_service', isEqualTo: category)
         .get();
-
     String productId = querySnapshot.docs[0].id;
     var productData = querySnapshot.docs[0].data() as Map<String, dynamic>;
-    print("------------------");
-    print(productId);
-    print(productData['p_price']);
     int productPrice = int.parse(productData['p_price']);
+    int amount_spent = 0;
+    int estimate_cost = 0;
     // Lưu sản phẩm vào budget
     if (currentUser != null) {
       DocumentReference userBudgetRef = firestore.collection(budgetCollection).doc(userid);
@@ -128,7 +127,8 @@ class ServiceController extends GetxController{
         List<dynamic> productIds = userBudgetSnapshot['product_id'];
         List<String> listProductIds = List<String>.from(productIds);
         listProductIds.add(productId);
-
+        amount_spent = int.parse(userBudgetSnapshot['amount_spent'].toString());
+        estimate_cost = int.parse(userBudgetSnapshot['estimate_cost'].toString());
         // Lấy giá của sản phẩm để trừ vào finalCost
         // int productPrice = querySnapshot.docs[0]['s_price'];
         // Cập nhật finalCost
@@ -137,12 +137,14 @@ class ServiceController extends GetxController{
         int finalCost = finalCostValue is int ? finalCostValue : int.parse(finalCostValue ?? '0');
 
         finalCost -= productPrice;
-
+        amount_spent += productPrice;
         // Cập nhật bảng budget
         await userBudgetRef.set({
           'product_id': FieldValue.arrayUnion(listProductIds),
           'user_id': currentUser?.uid.toString(),
           'final_cost': finalCost,
+          'amount_spent':amount_spent,
+          'estimate_cost':estimate_cost
         });
       } else {
         // Nếu bảng budget của người dùng chưa tồn tại, tạo mới và thêm sản phẩm vào danh sách sản phẩm
@@ -150,6 +152,8 @@ class ServiceController extends GetxController{
           'user_id': [currentUser?.uid.toString()],
           'product_id': [productId],
           'final_cost': 0, // Đặt giá trị mặc định của finalCost nếu không tồn tại
+          'amount_spent':0,
+          'estimate_cost':0
         });
       }
     }

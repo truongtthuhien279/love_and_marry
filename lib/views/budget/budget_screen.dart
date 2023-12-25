@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:intl/intl.dart';
 import 'package:love_and_marry_app/consts/consts.dart';
 import 'package:love_and_marry_app/services/firestore_services.dart';
 import 'package:love_and_marry_app/views/widget_common/bg_widget.dart';
@@ -19,6 +20,8 @@ class BudgetScreen extends StatefulWidget {
 
 class _BudgetScreenState extends State<BudgetScreen> {
   int finalCost = 0;
+  int amountSpent = 0;
+  int estimated_cost = 0;
   @override
   Widget build(BuildContext context) {
     return bgWidget(
@@ -49,94 +52,99 @@ class _BudgetScreenState extends State<BudgetScreen> {
                         } else {
                           var data = snapshot.data!.docs;
                           finalCost = data[0]["final_cost"];
-                          return Column(
+                          // print("final cost tab budget ");
+                          // print(finalCost);
+                          amountSpent = int.parse(data[0]["amount_spent"].toString());
+                          estimated_cost = int.parse(data[0]["estimate_cost"].toString());
+                          return SingleChildScrollView(
+                            physics: BouncingScrollPhysics(),
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
                               children: [
-                                Row(
-                                  children: [
-                                    Container(
-                                      width: 170,
-                                      height: 130,
-                                      decoration: BoxDecoration(
-                                        color: budColor1,
-                                        borderRadius: BorderRadius.circular(24),
-                                      ),
-                                      child: Column(
-                                        mainAxisAlignment: MainAxisAlignment
-                                            .center,
-                                        children: [
-                                          Text(
-                                            "Estimated Cost",
-                                            style: TextStyle(fontSize: 14,
-                                                color: budColor,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          SizedBox(height: 7),
-                                          Text(
-                                            "\$1,800.00",
-                                            style: TextStyle(fontSize: 23,
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          SizedBox(height: 7),
-                                          GestureDetector(
-                                            onTap: () {
-                                              Get.to(() => EditBudgetScreen());
-                                            },
-                                            child: Text(
-                                              "Edit",
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                decoration: TextDecoration
-                                                    .underline,
-                                              ),
+                                SingleChildScrollView(
+                                  physics: NeverScrollableScrollPhysics(),
+                                  scrollDirection: Axis.horizontal,
+                                  child:  Container(
+                                    width: 145,
+                                    height: 130,
+                                    decoration: BoxDecoration(
+                                      color: budColor1,
+                                      borderRadius: BorderRadius.circular(24),
+                                    ),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          "Estimated Cost",
+                                          style: TextStyle(fontSize: 14, color: budColor, fontWeight: FontWeight.bold),
+                                        ),
+                                        SizedBox(height: 7),
+                                        Text(
+                                          NumberFormat.currency(locale: 'vi_VN', symbol: '', decimalDigits: 0).format(estimated_cost),
+                                          style: TextStyle(fontSize: 18, color: Colors.black, fontWeight: FontWeight.bold),
+                                        ),
+                                        SizedBox(height: 7),
+                                        GestureDetector(
+                                          onTap: () {
+                                            Get.to(() => EditBudgetScreen(), arguments: {'estimated_cost': estimated_cost, 'amount_spent': amountSpent});
+                                          },
+                                          child: Text(
+                                            "Edit",
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              decoration: TextDecoration.underline,
                                             ),
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
-                                    SizedBox(width: 20,),
-                                    Container(
-                                      width: 170,
-                                      height: 130,
-                                      decoration: BoxDecoration(
-                                        color: budColor2,
-                                        borderRadius: BorderRadius.circular(24),
-                                      ),
-                                      child: Column(
-                                        mainAxisAlignment: MainAxisAlignment
-                                            .center,
-                                        children: [
-                                          Text(
-                                            "Final Cost",
-                                            style: TextStyle(fontSize: 14,
-                                                color: budColor,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          SizedBox(height: 7),
-                                          Text(
-                                            "\$${finalCost}",
-                                            style: TextStyle(fontSize: 23,
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          SizedBox(height: 7),
-                                          Text(
-                                            "Paid: \$800.00",
-                                            style: TextStyle(
-                                                color: Colors.white),
-                                          ),
-                                          SizedBox(height: 5),
-                                          Text(
-                                            "Pending: \$1,000.00",
-                                            style: TextStyle(
-                                                color: Colors.white),
-                                          ),
-                                        ],
-                                      ),
-                                    )
-                                  ],
+                                  ),
                                 ),
-                              ]
+                                SizedBox(width: 20),
+                                Container(
+                                  width: 145,
+                                  height: 130,
+                                  decoration: BoxDecoration(
+                                    color: budColor2,
+                                    borderRadius: BorderRadius.circular(24),
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        "Final Cost",
+                                        style: TextStyle(fontSize: 14, color: budColor, fontWeight: FontWeight.bold),
+                                      ),
+                                      SizedBox(height: 7),
+                                      Text(
+                                        NumberFormat.currency(locale: 'vi_VN', symbol: '', decimalDigits: 0).format(finalCost),
+                                        style: TextStyle(fontSize: 18, color: Colors.black, fontWeight: FontWeight.bold),
+                                      ),
+                                      SizedBox(height: 7),
+                                      Align(
+                                          alignment: Alignment.center,
+                                          child:
+                                          Text(
+                                            "Amount Spent: ",
+                                            style: TextStyle(color: Colors.white),
+                                          )
+                                      ),
+                                      SizedBox(height: 7),
+                                      Align(
+                                        alignment: Alignment.center,
+                                        child:
+                                        Text(
+                                          NumberFormat.currency(locale: 'vi_VN', symbol: '', decimalDigits: 0).format(amountSpent),
+                                          style: TextStyle(color: Colors.white),
+                                        )
+                                      ),
+                                      SizedBox(height: 5),
+                                    ],
+                                  ),
+                                ),
+                                // Add more containers as needed
+                              ],
+                            ),
                           );
                         }
                       }
@@ -178,7 +186,10 @@ class _BudgetScreenState extends State<BudgetScreen> {
                                 160.widthBox,
                                 GestureDetector(
                                   onTap: (){
-                                    Get.to(() => AddNewExpenseScreen());
+                                    // print("final cost");
+                                    // print(finalCost);
+                                    Get.to(() => AddNewExpenseScreen(),
+                                        arguments: {'final_cost': finalCost});
                                   },
                                   child: Image.asset(
                                     icAdd2,
@@ -224,8 +235,7 @@ class _BudgetScreenState extends State<BudgetScreen> {
                                                   var pName = product["p_name"];
                                                   var pPrice = product["p_price"];
                                                       int intPrice = int.parse(pPrice);
-                                                      finalCost = finalCost - intPrice;
-
+                                                      // finalCost = finalCost - intPrice;
                                                   return Container(
                                                     margin: EdgeInsets.only(left: 8, right: 8, bottom: 10),
                                                     padding: EdgeInsets.all(8),
@@ -273,14 +283,22 @@ class _BudgetScreenState extends State<BudgetScreen> {
                                                                       .fontWeight(FontWeight.normal)
                                                                       .make(),
                                                                   8.widthBox,
-                                                                  "${pPrice}"
-                                                                      .toString()
-                                                                      .text
-                                                                      .size(14)
-                                                                      .fontWeight(FontWeight.normal)
-                                                                      .make(),
+                                                                  Text(
+                                                                    NumberFormat.currency(locale: 'vi_VN', symbol: '', decimalDigits: 0).format(int.parse(pPrice)),
+                                                                    style: TextStyle(fontSize: 14, color: Colors.black, fontWeight: FontWeight.normal),
+                                                                  ),
                                                                   10.widthBox,
                                                                 ],
+                                                              ),
+                                                            ),
+                                                            2.heightBox,
+                                                            Align(
+                                                              alignment: Alignment.bottomRight,
+                                                              child: IconButton(
+                                                                icon: Icon(Icons.delete),
+                                                                onPressed: () async {
+                                                                 await FirestoreServices.deleteBudget(productIds[0][index]);
+                                                                },
                                                               ),
                                                             )
                                                           ],
