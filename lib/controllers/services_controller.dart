@@ -86,4 +86,109 @@ class ServiceController extends GetxController{
     List<dynamic> productIds = userFavoritesSnapshot['product_id'];
     return productIds.contains(productId);
   }
+  static  getProductPrice(String p_name, String category) async {
+    try {
+      QuerySnapshot querySnapshot = await firestore
+          .collection(productsCollection) // Replace with your actual collection name
+          .where('p_name', isEqualTo: p_name)
+          .where('p_service', isEqualTo: category)
+          .get();
+      if (querySnapshot.docs.isNotEmpty) {
+        return querySnapshot.docs.first;
+      } else {
+        return null; // Document not found
+      }
+    } catch (e) {
+      print('Error getting product price: $e');
+      return null;
+    }
+  }
+  Future<void> addToBudget(String p_name, String category) async {
+    String? userid = currentUser?.uid.toString();
+    // Tìm id của sản phẩm
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection(productsCollection)
+        .where('p_name', isEqualTo: p_name)
+        .where('p_service', isEqualTo: category)
+        .get();
+
+    String productId = querySnapshot.docs[0].id;
+    var productData = querySnapshot.docs[0].data() as Map<String, dynamic>;
+    print("------------------");
+    print(productId);
+    print(productData['p_price']);
+    int productPrice = int.parse(productData['p_price']);
+    // Lưu sản phẩm vào budget
+    if (currentUser != null) {
+      DocumentReference userBudgetRef = firestore.collection(budgetCollection).doc(userid);
+      // Lấy dữ liệu hiện tại trong bảng budget của người dùng
+      DocumentSnapshot userBudgetSnapshot = await userBudgetRef.get();
+      if (userBudgetSnapshot.exists) {
+        // Nếu bảng budget của người dùng đã tồn tại, thêm sản phẩm vào danh sách sản phẩm
+        List<dynamic> productIds = userBudgetSnapshot['product_id'];
+        List<String> listProductIds = List<String>.from(productIds);
+        listProductIds.add(productId);
+
+        // Lấy giá của sản phẩm để trừ vào finalCost
+        // int productPrice = querySnapshot.docs[0]['s_price'];
+        // Cập nhật finalCost
+        // int finalCost =  int.parse(userBudgetSnapshot['final_cost']);
+        var finalCostValue = userBudgetSnapshot['final_cost'];
+        int finalCost = finalCostValue is int ? finalCostValue : int.parse(finalCostValue ?? '0');
+
+        finalCost -= productPrice;
+
+        // Cập nhật bảng budget
+        await userBudgetRef.set({
+          'product_id': FieldValue.arrayUnion(listProductIds),
+          'user_id': currentUser?.uid.toString(),
+          'final_cost': finalCost,
+        });
+      } else {
+        // Nếu bảng budget của người dùng chưa tồn tại, tạo mới và thêm sản phẩm vào danh sách sản phẩm
+        await userBudgetRef.set({
+          'user_id': [currentUser?.uid.toString()],
+          'product_id': [productId],
+          'final_cost': 0, // Đặt giá trị mặc định của finalCost nếu không tồn tại
+        });
+      }
+    }
+  }
+
+// addToBudget(String p_name, String category) async {
+  //   String? userid = currentUser?.uid.toString();
+  //   //tìm id của sản phẩm
+  //   QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+  //       .collection(productsCollection)
+  //       .where('p_name', isEqualTo: p_name)
+  //       .where('p_service', isEqualTo: category)
+  //       .get();
+  //   String productId = querySnapshot.docs[0].id;
+  //
+  //   //lưu sản phẩm vào budget
+  //   if (currentUser != null) {
+  //     DocumentReference userFavoritesRef =  firestore.collection(budgetCollection).doc(userid);
+  //     // Lấy dữ liệu hiện tại trong bảng budget của người dùng
+  //     DocumentSnapshot userFavoritesSnapshot = await userFavoritesRef.get();
+  //
+  //     if (userFavoritesSnapshot.exists) {
+  //       // Nếu bảng budget của người dùng đã tồn tại, thêm sản phẩm vào danh sách yêu thích
+  //       List<dynamic> productIds = userFavoritesSnapshot['product_id'];
+  //       List<String> ListProductIds = List<String>.from(productIds);
+  //         ListProductIds.add(productId);
+  //         await userFavoritesRef.set({
+  //           'product_id': FieldValue.arrayUnion(ListProductIds),
+  //           'user_id': currentUser?.uid.toString(),
+  //          });
+  //       } else {
+  //       // Nếu bảng favorites của người dùng chưa tồn tại, tạo mới và thêm sản phẩm vào danh sách yêu thích
+  //       await userFavoritesRef.set({
+  //         'user_id': [currentUser?.uid.toString()],
+  //         'product_id': [productId],
+  //       });
+  //     }
+  //   } else {
+  //   }
+  // }
+
 }

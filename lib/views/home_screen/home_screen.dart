@@ -97,8 +97,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                         onTap: () {
                                           setState(() {
                                             int indexOnTap = index;
-
-
                                             for (int i = 0; i < checkOnTap.length; i++) {
                                               checkOnTap[i] = false;
                                               // print("for 1 để reset  " + checkOnTap.toString());
@@ -174,7 +172,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     topLeft: Radius.circular(20),
                                                     topRight: Radius.circular(20),
                                                   ),
-                                                  child: Image.network(topProData[index]['p_imgs'][0],
+                                                  child:Image.network(topProData[index]['p_imgs'][0] ,
                                                       width: 180,
                                                       height: 130,
                                                       fit: BoxFit.cover),
