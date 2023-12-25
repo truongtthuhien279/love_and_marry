@@ -5,6 +5,11 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:love_and_marry_app/consts/consts.dart';
 import 'package:love_and_marry_app/consts/firebase_consts.dart';
 
+class CostData {
+  final dynamic estimateCost;
+  final dynamic finalCost;
+  CostData({required this.estimateCost, required this.finalCost});
+}
 class FirestoreServices {
   //get User data
   static getUser(uid) {
@@ -38,14 +43,51 @@ class FirestoreServices {
   static getDress(){
     return firestore.collection(productsCollection).where('p_service',  whereIn: ['Dress', 'Suits']).snapshots();
   }
+  static getBudget(){
+    User? user = FirebaseAuth.instance.currentUser;
+    if(user != null){
+      return firestore.collection(budgetCollection).where('user_id', isEqualTo: user.uid).snapshots();
+    } else{
+      return [];
+    }
+  }
 
-
-
+  static Future<CostData> calculateFinalCost() async {
+    Stream<QuerySnapshot> budgetStream = getBudget();
+    var estimateCost;
+    var finalCost = 0;
+    // Lắng nghe sự thay đổi trong dữ liệu budget
+    await for (QuerySnapshot budgetSnapshot in budgetStream) {
+      // Duyệt qua các documents trong snapshot
+      for (QueryDocumentSnapshot budgetDoc in budgetSnapshot.docs) {
+        // Lấy dữ liệu từ document
+        Map<String, dynamic> data = budgetDoc.data() as Map<String, dynamic>;
+        // Lấy danh sách product_id từ budget
+        List<String> productIds = List<String>.from(data['product_id'] ?? []);
+        estimateCost = data['estimated_cost'];
+        finalCost = data['final_cost'];
+        print("final cost");
+        print(finalCost);
+        // Duyệt qua danh sách product_id và lấy thông tin sản phẩm
+        for (String productId in productIds) {
+          QuerySnapshot productSnapshot = await getProductById(productId).get();
+          QueryDocumentSnapshot productDoc = productSnapshot.docs.first;
+          Map<String, dynamic> productData = productDoc.data() as Map<String, dynamic>;
+          int productPrice = productData['s_price'];
+          finalCost -= productPrice;
+        }
+      }
+    }
+    // Trả về đối tượng của lớp CostData
+    return CostData(estimateCost: estimateCost, finalCost: finalCost);
+  }
+  static getProductById(id){
+    return firestore.collection(productsCollection).where('product_id', isEqualTo: id ).snapshots();
+  }
   Future<List<Map<String, dynamic>>> getFavorite() async {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       String currentUserUID = user.uid;
-
       // Lấy reference đến bảng favorites cho người dùng hiện tại
       DocumentReference userFavoritesRef = firestore.collection(favoriteCollection).doc(currentUser?.uid);
       // Lấy dữ liệu từ bảng favorite
