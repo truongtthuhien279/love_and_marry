@@ -32,7 +32,10 @@ class _ItemDetailsState extends State<ItemDetails> {
                 Get.back();
               },
               icon: Icon(Icons.arrow_back)),
-          title: widget.title!.text.color(Colors.black).fontFamily(semibold).make(),
+          title: SizedBox(
+            width: MediaQuery.of(context).size.width * 0.6, // Điều chỉnh tỉ lệ theo nhu cầu
+            child: widget.title!.text.color(Colors.black).fontFamily(semibold).make(),
+          ),
           actions: [
             // IconButton(onPressed: () {}, icon: Icon(Icons.share)),
             FutureBuilder<bool>(
@@ -41,22 +44,25 @@ class _ItemDetailsState extends State<ItemDetails> {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   // Trạng thái đang chờ, có thể hiển thị một tiện ích đợi hoặc làm gì đó khác.
                   return CircularProgressIndicator();
-                } else if (snapshot.hasError) {
-                  // Xử lý lỗi nếu có
-                  return Text('Error: ${snapshot.error}');
+                // }
+                // else if (snapshot.hasError) {
+                //   // Xử lý lỗi nếu có
+                //   return Text('');
                 } else {
                   // Trạng thái đã hoàn thành, sử dụng giá trị snapshot.data để xác định màu sắc của IconButton.
                   bool isFav = snapshot.data ?? false;
-                  return IconButton(
-                    onPressed: () async {
-                      await controller.addToWishList(widget.data.id, context);
-                      setState(()  {
-                      });
-                      // Không cần phải chờ ở đây vì đã sử dụng FutureBuilder
-                    },
-                    icon: Icon(
-                      Icons.favorite_outlined,
-                      color: isFav ? Colors.red : Colors.grey,
+                  return Container(
+                    child: IconButton(
+                      onPressed: () async {
+                        await controller.addToWishList(widget.data.id, context);
+                        setState(()  {
+                        });
+                        // Không cần phải chờ ở đây vì đã sử dụng FutureBuilder
+                      },
+                      icon: Icon(
+                        Icons.favorite_outlined,
+                        color: isFav ? Colors.red : Colors.grey,
+                      ),
                     ),
                   );
                 }
