@@ -143,15 +143,48 @@ class FirestoreServices {
           .where('user_id', isEqualTo: user.uid)
           .get();
       Map<String, dynamic> userData = userSnapshot.docs.first.data() as Map<String, dynamic>;
+
+      int amountSpent = userData['amount_spent'];
+      int finalCost = userData['final_cost'];
+
       List<String> productIds = List<String>.from(userData['product_id'] ?? []);
       // Xóa phần tử có id nhất định
-      productIds.removeWhere((productId) => productId == id.toString());
+      // Biến để kiểm tra xem đã xóa một phần tử chưa
+      bool removed = false;
+
+      // Xóa phần tử có id nhất định
+      productIds.removeWhere((productId) {
+        if (productId == id.toString() && !removed) {
+          // Nếu chưa xóa, thực hiện xóa và đặt removed thành true
+          removed = true;
+          return true;
+        }
+        return false;
+      });
+
+      //select giá của product để trả lại giá budget sau khi xóa
+      QuerySnapshot productSnapshot = await FirebaseFirestore.instance
+          .collection(productsCollection)
+          .where('product_id', isEqualTo: id)
+          .get();
+      if (productSnapshot.docs.isNotEmpty) {
+        // Lấy giá (p_price) từ dữ liệu sản phẩm
+        var price = productSnapshot.docs.first['p_price'].toString();
+        finalCost = finalCost + int.parse(price);
+        amountSpent = amountSpent - int.parse(price);
+        // print('Giá của sản phẩm với id $id là: $price và amountSpent is $amountSpent');
+      } else {
+        print('Không tìm thấy sản phẩm với id ');
+      }
 
       // Cập nhật lại dữ liệu trong Firestore
       await FirebaseFirestore.instance
           .collection(budgetCollection)
           .doc(userSnapshot.docs.first.id)
-          .update({'product_id': productIds});
+          .update({'product_id': productIds, 'amount_spent': amountSpent, 'final_cost': finalCost});
+
+
     }
+
   }
 }
