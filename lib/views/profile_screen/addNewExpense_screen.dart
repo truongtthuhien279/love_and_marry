@@ -229,6 +229,9 @@ class _AddNewExpenseScreenState extends State<AddNewExpenseScreen> {
                           VxToast.show(context, msg: "Save Success");
                         });
                       }
+                    else if (price != null && int.parse(price) > finalCost){
+                      VxToast.show(context, msg: "Price must be less than or equal to estimated cost!");
+                    }
                     else{
                       VxToast.show(context, msg: "Save Failed!");
                     }

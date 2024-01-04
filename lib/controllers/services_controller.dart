@@ -127,6 +127,7 @@ class ServiceController extends GetxController{
         List<dynamic> productIds = userBudgetSnapshot['product_id'];
         List<String> listProductIds = List<String>.from(productIds);
         listProductIds.add(productId);
+        print(listProductIds);
         amount_spent = int.parse(userBudgetSnapshot['amount_spent'].toString());
         estimate_cost = int.parse(userBudgetSnapshot['estimate_cost'].toString());
         // Lấy giá của sản phẩm để trừ vào finalCost
@@ -135,12 +136,13 @@ class ServiceController extends GetxController{
         // int finalCost =  int.parse(userBudgetSnapshot['final_cost']);
         var finalCostValue = userBudgetSnapshot['final_cost'];
         int finalCost = finalCostValue is int ? finalCostValue : int.parse(finalCostValue ?? '0');
-
-        finalCost -= productPrice;
-        amount_spent += productPrice;
+        if(estimate_cost >= productPrice){
+          finalCost -= productPrice;
+          amount_spent += productPrice;
+        }
         // Cập nhật bảng budget
         await userBudgetRef.set({
-          'product_id': FieldValue.arrayUnion(listProductIds),
+          'product_id': listProductIds,
           'user_id': currentUser?.uid.toString(),
           'final_cost': finalCost,
           'amount_spent':amount_spent,
