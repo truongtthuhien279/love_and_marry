@@ -24,10 +24,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   // late List<bool> checkOnTap;
   List<bool> checkOnTap = List.generate(100, (index) => index == 0);
-
+  var findBy = "all";
+  //số 0 hoặc 1 được truyền vào có nghĩa là: 0 là sợt theo service từ khung toprate
+  // số 1 có nghĩa là hàm sẽ dùng cho mục đích sợt theo cả service và name
+  var isSearch = 0;
+  TextEditingController _searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-
     var controller =Get.put(ServiceController());
     return StreamBuilder(
       stream: FirestoreServices.getToprate(),
@@ -42,8 +45,6 @@ class _HomeScreenState extends State<HomeScreen> {
           );
         } else{
           var data = snapshot.data!.docs;
-          Random random = Random();
-          // print("-----------------------------" + checkOnTap.toString());
           return  Container(
             color: creamColor,
             width: context.screenWidth,
@@ -67,14 +68,20 @@ class _HomeScreenState extends State<HomeScreen> {
                               color: whiteColor,
                             ),
                             child: TextFormField(
-                              decoration: const InputDecoration(
-                                  border: InputBorder.none,
-                                  suffixIcon: Image(image: AssetImage(icSearch)),
-                                  filled: true,
-                                  hintText: searchResort,
-                                  contentPadding: EdgeInsets.symmetric(
-                                      vertical: 10, horizontal: 10),
-                                  hintStyle: TextStyle(color: Colors.grey)),
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                suffixIcon: InkWell(
+                                  onTap: () {
+                                    print('icSearch tapped');
+                                    findBy = _searchController.text;
+                                  },
+                                  child: Image(image: AssetImage(icSearch)),
+                                ),
+                                filled: true,
+                                hintText: searchResort,
+                                contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                                hintStyle: TextStyle(color: Colors.grey),
+                              ),
                             ),
                           ),
                         )
@@ -99,10 +106,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                             int indexOnTap = index;
                                             for (int i = 0; i < checkOnTap.length; i++) {
                                               checkOnTap[i] = false;
-                                              // print("for 1 để reset  " + checkOnTap.toString());
                                             }
+                                            findBy = data[index]['s_name'];
                                             checkOnTap[indexOnTap] = true;
-                                            // print("for 2 để gán " + checkOnTap.toString());
                                           });
                                         },
                                         child: checkOnTap[index] == false
@@ -142,9 +148,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             //list popular resort
                             10.heightBox,
                             StreamBuilder(
-                              stream: FirestoreServices.getPopularProduct(),
-                              builder:  (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
 
+                              stream: FirestoreServices.getPopularProduct(findBy, isSearch),
+                              builder:  (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
                                 if(snapshot.connectionState == ConnectionState.waiting){
                                   return Center(child: loadingIndicator(),);
                                 }else{
@@ -205,25 +211,26 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         // 8.widthBox,
                                                         // "(111 reviews)".text.size(9).make(),
                                                         100.widthBox,
-                                                        favoriteCheck[index] == true
-                                                            ? Icon(
-                                                          Icons.favorite_sharp,
-                                                          size: 20,
-                                                          color: Colors.red,
-                                                        ).onTap(() {
-                                                          print(favoriteCheck[index]);
-                                                          setState(() {
-                                                            favoriteCheck[index] =
-                                                            !favoriteCheck[index];
-                                                          });
-                                                        })
-                                                            : Icon(
+                                                        // favoriteCheck[index] == true
+                                                        //     ? Icon(
+                                                        //   Icons.favorite_sharp,
+                                                        //   size: 20,
+                                                        //   color: Colors.red,
+                                                        // ).onTap(() {
+                                                        //   print(favoriteCheck[index]);
+                                                        //   setState(() {
+                                                        //     favoriteCheck[index] =
+                                                        //     !favoriteCheck[index];
+                                                        //   });
+                                                        // })
+                                                        //     :
+                                                        Icon(
                                                           Icons.favorite_outline,
                                                           size: 20,
                                                         ).onTap(() {
                                                           setState(() {
-                                                            favoriteCheck[index] =
-                                                            !favoriteCheck[index];
+                                                            // favoriteCheck[index] =
+                                                            // !favoriteCheck[index];
                                                           });
                                                         })
                                                       ],
@@ -487,5 +494,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
       },
     );
+
   }
+
 }

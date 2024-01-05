@@ -4,7 +4,7 @@ const listTopRate = ["Top Rate","Resort","Banquet Halls","Farmhouse"];
 const listDress = ["All", "Dress", "Suits"];
 var checkOnTap = [true, false, false];
 const listTitleTopRate = ["The Regent","Bloom Hotel", "Green Hotel", "Phu Quoc Resort"];
-var favoriteCheck = [false, false, false, false];
+var favoriteCheck = [false, false, false,false, false, false];
 var cicyleCheck = [false, false, false, false];
 
 const listImgResort =[imgRS5,imgRR,imgRS5, imgRR];

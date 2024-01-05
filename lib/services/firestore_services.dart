@@ -27,8 +27,12 @@ class FirestoreServices {
     return  firestore.collection(popularSvCollection).snapshots();
     // return firestore.collection(popularSvCollection).where('s_name',isEqualTo: 'dress').snapshots();
   }
-  static getPopularProduct(){
-      return firestore.collection(popularPrCollection).where('p_service',  whereIn: ['Resorts']).snapshots();
+  static getPopularProduct(findBy, isSearch){
+      if(findBy == "all")
+        return firestore.collection(popularPrCollection).snapshots();
+      else{
+        return firestore.collection(popularPrCollection).where('p_service',  whereIn: [findBy]).snapshots();
+      }
   }
   static getCategory(){
     return firestore.collection(serviceCollection).snapshots();
