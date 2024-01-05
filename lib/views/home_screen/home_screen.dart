@@ -24,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   // late List<bool> checkOnTap;
   List<bool> checkOnTap = List.generate(100, (index) => index == 0);
-  var findBy = "all";
+  var findBy = "None";
   //số 0 hoặc 1 được truyền vào có nghĩa là: 0 là sợt theo service từ khung toprate
   // số 1 có nghĩa là hàm sẽ dùng cho mục đích sợt theo cả service và name
   var isSearch = 0;
@@ -68,12 +68,17 @@ class _HomeScreenState extends State<HomeScreen> {
                               color: whiteColor,
                             ),
                             child: TextFormField(
+                              controller: _searchController,
                               decoration: InputDecoration(
                                 border: InputBorder.none,
                                 suffixIcon: InkWell(
                                   onTap: () {
-                                    print('icSearch tapped');
-                                    findBy = _searchController.text;
+                                    setState(() {
+                                      print('icSearch tapped');
+                                      findBy = _searchController.text;
+                                      print(findBy);
+                                      isSearch = 1;
+                                    });
                                   },
                                   child: Image(image: AssetImage(icSearch)),
                                 ),
@@ -103,6 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     return GestureDetector(
                                         onTap: () {
                                           setState(() {
+                                            isSearch = 0;
                                             int indexOnTap = index;
                                             for (int i = 0; i < checkOnTap.length; i++) {
                                               checkOnTap[i] = false;
@@ -154,13 +160,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                 if(snapshot.connectionState == ConnectionState.waiting){
                                   return Center(child: loadingIndicator(),);
                                 }else{
-                                  var topProData = snapshot.data!.docs;
+                                  var topProData = snapshot.data?.docs;
+
                                   return SingleChildScrollView(
                                     physics: const BouncingScrollPhysics(),
                                     scrollDirection: Axis.horizontal,
                                     child: Row(
                                         children: List.generate(
-                                          topProData.length,
+                                          topProData?.length ?? 0,
                                               (index) => Column(
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             mainAxisAlignment: MainAxisAlignment.start,
@@ -178,7 +185,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     topLeft: Radius.circular(20),
                                                     topRight: Radius.circular(20),
                                                   ),
-                                                  child:Image.network(topProData[index]['p_imgs'][0] ,
+                                                  child:Image.network(topProData?[index]['p_imgs'][0] ,
                                                       width: 180,
                                                       height: 130,
                                                       fit: BoxFit.cover),
@@ -192,7 +199,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                   mainAxisAlignment: MainAxisAlignment.start,
                                                   children: [
-                                                    "${topProData[index]['p_name']}"
+                                                    "${topProData?[index]['p_name']}"
                                                         .text
                                                         .size(16)
                                                         .fontWeight(FontWeight.bold)
@@ -207,7 +214,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         Icon(Icons.star,
                                                             color: Colors.yellow, size: 15.0),
                                                         8.widthBox,
-                                                        "${topProData[index]['p_rating']}".text.size(13).make(),
+                                                        "${topProData?[index]['p_rating']}".text.size(13).make(),
                                                         // 8.widthBox,
                                                         // "(111 reviews)".text.size(9).make(),
                                                         100.widthBox,
@@ -248,7 +255,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               horizontal: 8, vertical: 8))
                                               .make()
                                               .onTap(() {
-                                                Get.to(() => ItemDetails(title: "${topProData[index]['p_name']}",data: topProData[index]));
+                                                Get.to(() => ItemDetails(title: "${topProData?[index]['p_name']}",data: topProData?[index]));
                                               }),
                                         )),
                                   );
