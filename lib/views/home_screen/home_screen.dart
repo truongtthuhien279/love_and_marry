@@ -435,15 +435,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     5.heightBox,
                                                     Row(
                                                       children: [
-                                                        "Price: "
+                                                        "Price:"
                                                             .text
                                                             .color(Colors.grey[300])
                                                             .size(12)
                                                             .fontFamily(semibold)
                                                             .make(),
-                                                        Icon(Icons.attach_money,
-                                                            color: Colors.grey[800],
-                                                            size: 15.0),
+                                                        // Icon(Icons.attach_money,
+                                                        //     color: Colors.grey[800],
+                                                        //     size: 15.0),
                                                         "${topCloData[index]['p_price']}"
                                                             .numCurrency
                                                             .text
@@ -451,7 +451,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             .size(10)
                                                             .fontFamily(semibold)
                                                             .make(),
-                                                        10.widthBox,
+                                                        5.widthBox,
                                                         Icon(Icons.star,
                                                             color: Colors.yellow,
                                                             size: 15.0),

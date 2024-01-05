@@ -130,8 +130,10 @@ class _CheckListScreenState extends State<CheckListScreen> {
 
   Widget buildChecklistItem(int taskNumber, String taskText, int index) {
     return Container(
-      margin: EdgeInsets.all(10.0), // Khoảng cách giữa nội dung và viền hộp
-      padding: EdgeInsets.all(20.0), // Khoảng cách giữa nội dung và bo góc
+      margin: EdgeInsets.all(10.0),
+      // Khoảng cách giữa nội dung và viền hộp
+      padding: EdgeInsets.all(20.0),
+      // Khoảng cách giữa nội dung và bo góc
       decoration: BoxDecoration(
         // color: lightGolden,
         color: Colors.orange[100],
@@ -144,59 +146,62 @@ class _CheckListScreenState extends State<CheckListScreen> {
           )
         ],
       ),
-
       child: Stack(
-        children: [
-          // Biểu tượng hình tròn ở góc trái
-          Positioned(
-            left: 300.0,
-            top: 10.0,
-            child: GestureDetector(
-              onTap: () {
-                setState(() {
-                  checkItems[index].isSelected = !checkItems[index].isSelected;
-                });
-                // Xử lý khi người dùng chọn biểu tượng hình tròn
-              },
-              child: Icon(
-                checkItems[index].isSelected
-                    ? Icons.circle_sharp
-                    : Icons.circle_outlined,
-                size: 30,
-                // color: Colors.blue,
-                color: Colors.orange[600],
-              ),
-            ),
-          ),
-
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Task $taskNumber',
-                style: TextStyle(
-                  color: brownColor,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 5),
-              Container(
-                constraints: BoxConstraints(
-                  maxWidth: 300,
-                ),
-                child: Text(
-                  taskText,
-                  style: TextStyle(
-                    color: brownColor,
-                    fontSize: 15,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
+    children: [
+    // Biểu tượng hình tròn ở góc trái
+    Positioned(
+    left: 270.0, // Chuyển vị trí về gần hơn
+      top: 10.0,
+      child: GestureDetector(
+        onTap: () {
+          setState(() {
+            checkItems[index].isSelected = !checkItems[index].isSelected;
+          });
+          // Xử lý khi người dùng chọn biểu tượng hình tròn
+        },
+        child: Icon(
+          checkItems[index].isSelected
+              ? Icons.circle_sharp
+              : Icons.circle_outlined,
+          size: 30,
+          color: Colors.orange[600],
+        ),
       ),
+    ),
+
+    Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+    Text(
+    'Task $taskNumber',
+    style: TextStyle(
+    color: Colors.brown,
+    fontSize: 20,
+    fontWeight: FontWeight.bold,
+    ),
+    ),
+    SizedBox(height: 5),
+    Container(
+    constraints: BoxConstraints(
+    maxWidth: 300,
+    ),
+    child: Text(
+    taskText,
+    style: TextStyle(
+    color: Colors.brown,
+    fontSize: 15,
+    ),
+    ),
+    ),
+    ],
+    )
+    ,
+    ]
+    ,
+    )
+    ,
+
+
     );
   }
 }

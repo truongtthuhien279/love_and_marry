@@ -30,14 +30,9 @@ class FirestoreServices {
   static getPopularProduct(findBy, isSearch){
     if(isSearch == 1){
       String searchKeyword = findBy; // Đổi giá trị này thành từ khóa bạn muốn tìm kiếm
-      // return firestore.collection(productsCollection)
-      //     .where(Filter.or(Filter('p_service', isGreaterThanOrEqualTo: findBy.toString()),
-      //             Filter('p_name', isGreaterThanOrEqualTo: findBy.toString())))
-      //             .snapshots();
       return firestore.collection(popularPrCollection)
+          .where('p_name', isLessThan: searchKeyword +'z')
           .where('p_name', isGreaterThanOrEqualTo: searchKeyword)
-          .where('p_name', isLessThan: searchKeyword + '\uf8ff')
-          // .where('p_service', isEqualTo: findBy != null ? findBy : '') // Kiểm tra null và sử dụng giá trị mặc định là ''
           .orderBy('p_name')
           .startAt([searchKeyword])
           .endAt([searchKeyword + '\uf8ff'])

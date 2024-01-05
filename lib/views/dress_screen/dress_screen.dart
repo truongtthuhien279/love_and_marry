@@ -239,18 +239,18 @@ class _DressScreenState extends State<DressScreen> {
                                                     .fontFamily(semibold)
                                                     .fontWeight(FontWeight.bold)
                                                     .make(),
-                                                5.heightBox,
                                                 Row(
                                                   children: [
-                                                    "Price: "
+                                                    "Price:"
                                                         .text
                                                         .color(Colors.grey[300])
                                                         .size(12)
                                                         .fontFamily(semibold)
                                                         .make(),
+                                                    5.widthBox,
                                                     Icon(Icons.attach_money,
                                                         color: Colors.grey[800],
-                                                        size: 15.0),
+                                                        size: 10.0),
                                                     "${alldress[index]['p_price']}"
                                                         .numCurrency
                                                         .text
@@ -258,7 +258,6 @@ class _DressScreenState extends State<DressScreen> {
                                                         .size(10)
                                                         .fontFamily(semibold)
                                                         .make(),
-                                                    10.widthBox,
                                                     Icon(Icons.star,
                                                         color: Colors.yellow,
                                                         size: 15.0),
@@ -273,10 +272,8 @@ class _DressScreenState extends State<DressScreen> {
                                               ],
                                             )
                                                 .box
-                                                .margin(EdgeInsets.only(
-                                                    left: 8, top: 3))
                                                 .rounded
-                                                .width(135)
+                                                .width(139)
                                                 .height(52)
                                                 .make(),
                                           )

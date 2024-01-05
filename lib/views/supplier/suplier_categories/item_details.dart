@@ -126,6 +126,7 @@ class _ItemDetailsState extends State<ItemDetails> {
                                   width: 30,
                                   fit: BoxFit.cover,
                                 ),
+                                SizedBox(width: 10,),
                                 Align(
                                   alignment: Alignment.topLeft,
                                   child: "${widget.data['p_location']}"
@@ -139,22 +140,22 @@ class _ItemDetailsState extends State<ItemDetails> {
                         ],
                       ),
                             10.heightBox,
-                            SingleChildScrollView(
-                              physics: NeverScrollableScrollPhysics(),
-                              scrollDirection: Axis.horizontal,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  "${widget.data['p_serviceroom']}"
-                                      .text
-                                      .size(20)
-                                      .color(Colors.white)
-                                      .fontWeight(FontWeight.bold)
-                                      .make(),
-                                ],
-                              ).box.height(50).rounded.shadowSm.padding(EdgeInsets.symmetric(horizontal: 10)).color(colorRes).make(),
-                            ),
-                            10.heightBox,
+                            // SingleChildScrollView(
+                            //   physics: NeverScrollableScrollPhysics(),
+                            //   scrollDirection: Axis.horizontal,
+                            //   child: Row(
+                            //     mainAxisAlignment: MainAxisAlignment.start,
+                            //     children: [
+                            //       "${widget.data['p_serviceroom']}"
+                            //           .text
+                            //           .size(20)
+                            //           .color(Colors.white)
+                            //           .fontWeight(FontWeight.bold)
+                            //           .make(),
+                            //     ],
+                            //   ).box.height(50).rounded.shadowSm.padding(EdgeInsets.symmetric(horizontal: 10)).color(colorRes).make(),
+                            // ),
+                            // 10.heightBox,
                       Column(
                         children: [
                           Container(
@@ -178,7 +179,9 @@ class _ItemDetailsState extends State<ItemDetails> {
                                 .size(18)
                                 .color(fontGrey)
                                 .make(),
-                          )],
+                          ),
+                          20.heightBox,
+                        ],
                       ),
                       ]))))
         ]));

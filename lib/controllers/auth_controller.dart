@@ -8,25 +8,35 @@
   import '../consts/strings.dart';
 
   class AuthController extends GetxController{
-
     var isLoading = false.obs;
-
-
     //textControllers
     var emailController = TextEditingController();
     var passwordController = TextEditingController();
-
     //login method
     Future<UserCredential?> loginMethod({context}) async{
       UserCredential? userCredential;
+      if (emailController.text.isEmpty || passwordController.text.isEmpty) {
+        String errorMessage = "Please enter email and password.";
 
-      try{
-        userCredential = await auth.signInWithEmailAndPassword(email: emailController.text, password: passwordController.text);
+        VxToast.show(
+          context,
+          msg: errorMessage,
+          position: VxToastPosition.bottom,
+        );}
+        else{
+        try{
+          userCredential = await auth.signInWithEmailAndPassword(email: emailController.text, password: passwordController.text);
+        }
+        on FirebaseAuthException catch (e) {
+          String errorMessage = "Login failed. Wrong email or password.";
+          VxToast.show(
+            context,
+            msg: errorMessage,
+            position: VxToastPosition.bottom,);
+        }
+        return userCredential;
       }
-      on FirebaseAuthException catch (e) {
-        VxToast.show(context, msg: e.toString());
-      }
-      return userCredential;
+
     }
 
     //signup Method
