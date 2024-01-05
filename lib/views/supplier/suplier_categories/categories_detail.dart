@@ -81,12 +81,10 @@ class CategoryDetails extends StatelessWidget {
                                     width: 200,
                                     fit: BoxFit.cover,
                                   ),
-                                  SizedBox(height: 5,),
-                                  "${data[index]['p_name']}".text.fontFamily(semibold).fontWeight(FontWeight.bold).size(15).color(brownColor).make(),
-                                  // SizedBox(height: 5,),
-                                  // "   \$6000".text.fontFamily(bold).color(Colors.red).size(16).make(),
+                                  Padding(padding: EdgeInsets.only(left: 4.0,top: 12.0),child: "${data[index]['p_name']}".text.fontFamily(semibold).fontWeight(FontWeight.bold).size(11).color(brownColor).make(),),
                                   SizedBox(height: 5),
-                                  SingleChildScrollView(
+                                  Padding(padding: EdgeInsets.only(left: 4.0),
+                                  child: SingleChildScrollView(
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.start,
                                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -105,7 +103,7 @@ class CategoryDetails extends StatelessWidget {
                                         ),
                                       ],
                                     ),
-                                  ),
+                                  ),)
                                 ],
                               ).box.white.roundedLg.margin(EdgeInsets.symmetric(horizontal: 8,vertical: 8)).outerShadowSm.clip(Clip.antiAlias).shadowSm.make().onTap(() {
                                 Get.to(() => ItemDetails(title: "${data[index]['p_name']}",data: data[index]));

@@ -85,10 +85,10 @@ class _ForumScreenState extends State<ForumScreen> {
                           .color(brownLine)
                           .make(),
                     ).box.margin(EdgeInsets.only(left: 12)).make(),
-                    50.widthBox,
+                    16.widthBox,
                     Align(
                       alignment: Alignment.bottomLeft,
-                      child: "View all"
+                      child: "View all >>"
                           .text
                           .fontFamily(semibold)
                           .fontWeight(FontWeight.bold)
@@ -411,7 +411,7 @@ class _ForumScreenState extends State<ForumScreen> {
                                           shape: BoxShape.circle,
                                         ),
                                         child: Text(
-                                          "1",
+                                          "20",
                                           // Thay thế bằng số lượt xem thực tế
                                           style: TextStyle(
                                             color: Colors.black,
@@ -472,28 +472,26 @@ class _ForumScreenState extends State<ForumScreen> {
                                       ),
                                   ],
                                 ),
-                                SizedBox(
-                                  width: 15,
-                                ),
-                                SingleChildScrollView(
-                                  child: Align(
-                                    alignment: Alignment.bottomLeft,
-                                    child: "sunday 7-nov-23"
-                                        .text
-                                        .fontFamily(semibold)
-                                        .fontWeight(FontWeight.bold)
-                                        .size(13)
-                                        .color(fontGrey)
-                                        .make(),
-                                  )
-                                      .box
-                                      .margin(EdgeInsets.only(left: 12))
-                                      .padding(EdgeInsets.only(left: 7))
-                                      .make(),
-                                ),
-                              ],
-                            )
 
+
+                              ],
+                            ),
+                            SingleChildScrollView(
+                              child: Align(
+                                alignment: Alignment.bottomLeft,
+                                child: "sunday 7-nov-23"
+                                    .text
+                                    .fontFamily(semibold)
+                                    .fontWeight(FontWeight.bold)
+                                    .size(13)
+                                    .color(fontGrey)
+                                    .make(),
+                              )
+                                  .box
+                                  .margin(EdgeInsets.only(left: 12))
+                                  .padding(EdgeInsets.only(left: 7))
+                                  .make(),
+                            ),
 
 
                           ]
@@ -501,8 +499,6 @@ class _ForumScreenState extends State<ForumScreen> {
                     ),
                   ],
                 ),
-
-
 
 
                 SizedBox(height: 15,),
@@ -728,7 +724,7 @@ class _ForumScreenState extends State<ForumScreen> {
                                             shape: BoxShape.circle,
                                           ),
                                           child: Text(
-                                            "1",
+                                            "10",
                                             // Thay thế bằng số lượt xem thực tế
                                             style: TextStyle(
                                               color: Colors.black,
@@ -793,25 +789,23 @@ class _ForumScreenState extends State<ForumScreen> {
                                 SizedBox(
                                   width: 15,
                                 ),
-                                
-                                
-                                Align(
-                                  alignment: Alignment.bottomLeft,
-                                  child: "thursday 20-sep-23"
-                                      .text
-                                      .fontFamily(semibold)
-                                      .fontWeight(FontWeight.bold)
-                                      .size(13)
-                                      .color(fontGrey)
-                                      .make(),
-                                )
-                                    .box
-                                    .margin(EdgeInsets.only(left: 12))
-                                    .padding(EdgeInsets.only(left: 7))
-                                    .make(),
-                              ],
-                            )
 
+                              ],
+                            ),
+                            Align(
+                              alignment: Alignment.bottomLeft,
+                              child: "thursday 20-sep-23"
+                                  .text
+                                  .fontFamily(semibold)
+                                  .fontWeight(FontWeight.bold)
+                                  .size(13)
+                                  .color(fontGrey)
+                                  .make(),
+                            )
+                                .box
+                                .margin(EdgeInsets.only(left: 12))
+                                .padding(EdgeInsets.only(left: 7))
+                                .make(),
 
 
                           ]

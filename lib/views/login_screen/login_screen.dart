@@ -97,7 +97,6 @@ class LoginScreen extends StatelessWidget {
                         .width(context.screenWidth - 70).shadowSm
                         .make(),
                   ),
-
               ],
               ),
             ),

@@ -57,7 +57,7 @@ const dayB = "10 jan 2022";
 
 
 //Supplier categories
-const resort1 = "Resorts", photographer = "Photographers", makeUp = "Make - up";
+const resort1 = "Resorts", photographer = "Photographers", makeUp = "Makeup";
 
 //profile string
 
